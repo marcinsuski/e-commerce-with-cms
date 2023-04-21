@@ -23,6 +23,6 @@
     background-color: rgb(255 255 255);
     padding: 0.5rem 0.8rem;
     border-radius: 0.4rem;
-    outline: 1px dashed rgb(0, 251, 255);
-    outline-offset: 3px;
+    outline-color: rgb(0, 251, 255);
+    outline-offset: 4px;
 }
