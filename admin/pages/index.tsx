@@ -1,46 +1,31 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import Nav from "../components/Nav";
+import Layout from "../components/Layout";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
-    const { data: session } = useSession();
-    if (!session) {
-        return (
-            <div className={styles.container}>
-                <Head>
-                    <title>ecommerce Admin panel</title>
-                    <meta name="description" content="Admin panel" />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
+    const { data: session } = useSession<boolean>();
+    if (!session) return;
+    const userName = session.user?.name;
+    const image = session?.user?.image;
 
-                <main className={styles.main}>
-                    <div className={styles.btn_wrapper}>
-                        <button
-                            data-type="login-btn"
-                            onClick={() => signIn("google")}
-                        >
-                            Login with Google
-                        </button>
-                    </div>
-                </main>
+    console.log(session);
+    return (
+        <Layout>
+            <div className={styles.header}>
+                <div>
+                    {userName && (
+                        <span>
+                            Hello, <b>{userName}</b>
+                        </span>
+                    )}
+                </div>
+                <div className={styles.admin}>
+                    {image && <img src={image} alt="" />}
+                    {session?.user?.name}
+                </div>
             </div>
-        );
-    }
-    if (session) {
-        return (
-            <div className={styles.container}>
-                <Head>
-                    <title>ecommerce Admin panel</title>
-                    <meta name="description" content="Admin panel" />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
-
-                <main className={styles.main}>
-                    <div className={styles.btn_wrapper}>
-                        <div>Logged in {session.user?.email}</div>
-                    </div>
-                </main>
-            </div>
-        );
-    }
+        </Layout>
+    );
 }
