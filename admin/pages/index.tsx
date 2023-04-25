@@ -10,7 +10,6 @@ export default function Home() {
     const userName = session.user?.name;
     const image = session?.user?.image;
 
-    console.log(session);
     return (
         <Layout>
             <div className={styles.header}>
