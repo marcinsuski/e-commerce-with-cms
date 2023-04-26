@@ -1,7 +1,11 @@
 .container {
-    --blue: rgb(12, 31, 138);
+    --blue: rgba(12, 31, 138, 1);
+    --lightBlue: rgba(114, 192, 255, 0.6);
     --teal: rgb(0, 251, 255);
     --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+    --btn-red: rgb(239, 5, 5);
+    --btn-default: rgb(200, 198, 198);
     min-height: 100vh;
     background: var(--blue);
 }
@@ -112,14 +116,17 @@
     height: 1.4rem;
 }
 
-.product_btn {
+button.newproduct__btn {
     background: var(--blue);
     color: var(--white);
     border-radius: 6px;
-    outline-offset: 4px;
-    outline-color: var(--blue);
     padding: 0.2rem 0.6rem;
     transition: 300ms ease;
+    border: none;
+}
+
+button.newproduct__btn:hover {
+    transform: scale(1.1);
 }
 
 .btn_primary {
@@ -135,4 +142,67 @@
 .btn_primary:focus {
     outline-offset: 1px;
     outline: 2px solid var(--blue);
+}
+
+table.basic__table {
+    margin-top: 1rem;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.basic__table thead tr td {
+    background-color: var(--lightBlue);
+}
+
+table.basic__table tr td {
+    padding: 0.2rem;
+    border: 1px solid rgb(191, 191, 191);
+}
+
+table.basic__table a {
+    background-color: var(--blue);
+    color: white;
+    height: 100%;
+    font-size: 0.8em;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    gap: 0.1rem;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    transition: 300ms ease;
+    outline-offset: 2px;
+    outline-color: var(--blue);
+}
+
+table.basic__table a:hover {
+    transform: scale(1.1);
+}
+
+td.basic__table_buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.btn__red,
+.btn__default {
+    border-radius: 4px;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+
+.btn__red {
+    background-color: var(--btn-red);
+    color: var(--white);
+}
+.btn__default {
+    background-color: var(--btn-default);
+    color: var(--black);
+}
+
+.btn__red:hover,
+.btn__default:hover {
+    transform: scale(1.1);
 }

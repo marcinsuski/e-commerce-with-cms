@@ -15,7 +15,7 @@ function Layout(props: Props) {
             <div className={styles.container}>
                 <Head>
                     <title>ecommerce Admin panel</title>
-                    <meta name="description" content="Admin panel" />
+                    <meta name="description" content="Admin panel login" />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
 
@@ -34,12 +34,6 @@ function Layout(props: Props) {
     }
     return (
         <div className={styles.container}>
-            <Head>
-                <title>ecommerce Admin panel</title>
-                <meta name="description" content="Admin panel" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
             <main className={styles.wrapper}>
                 <Nav />
                 <div className={styles.main}>

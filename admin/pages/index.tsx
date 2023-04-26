@@ -11,20 +11,26 @@ export default function Home() {
     const image = session?.user?.image;
 
     return (
-        <Layout>
-            <div className={styles.header}>
-                <div>
-                    {userName && (
-                        <span>
-                            Hello, <b>{userName}</b>
-                        </span>
-                    )}
+        <>
+            <Head>
+                <title>Admin Panel</title>
+                <meta name="description" content="Admin Panel" />
+            </Head>
+            <Layout>
+                <div className={styles.header}>
+                    <div>
+                        {userName && (
+                            <span>
+                                Hello, <b>{userName}</b>
+                            </span>
+                        )}
+                    </div>
+                    <div className={styles.admin}>
+                        {image && <img src={image} alt="" />}
+                        {session?.user?.name}
+                    </div>
                 </div>
-                <div className={styles.admin}>
-                    {image && <img src={image} alt="" />}
-                    {session?.user?.name}
-                </div>
-            </div>
-        </Layout>
+            </Layout>
+        </>
     );
 }
