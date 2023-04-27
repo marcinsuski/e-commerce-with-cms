@@ -8,20 +8,29 @@ export interface ProductType {
     description?: string | undefined;
     price?: number;
     _id?: number;
+    images?: string[];
 }
 
 const initialState = {
     title: "",
     description: "",
     price: 0,
+    images: [],
 };
 
-const ProductForm = ({ title, description, price, _id }: ProductType) => {
+const ProductForm = ({
+    title,
+    description,
+    price,
+    _id,
+    images,
+}: ProductType) => {
     const [product, setProduct] = useState<ProductType>(
-        { title, description, price } || initialState
+        { title, description, price, images } || initialState
     );
     const router = useRouter();
 
+    // add product title to state
     const AddTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProduct({
             ...product,
@@ -29,6 +38,7 @@ const ProductForm = ({ title, description, price, _id }: ProductType) => {
         });
     };
 
+    // add product description to state
     const AddDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setProduct({
             ...product,
@@ -36,11 +46,35 @@ const ProductForm = ({ title, description, price, _id }: ProductType) => {
         });
     };
 
+    // add product price to state
     const AddPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProduct({
             ...product,
             price: parseFloat(e.target.value),
         });
+    };
+    // add product images to state
+    const uploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target?.files;
+        if (files && files?.length > 0) {
+            const data = new FormData();
+            for (const file of files) {
+                data.append("file", file);
+            }
+            const response = await axios.post("/api/upload", data);
+            console.log(response.data);
+            if (product.images) {
+                setProduct({
+                    ...product,
+                    images: [...(images as []), ...response.data.links],
+                });
+            } else {
+                setProduct({
+                    ...product,
+                    images: [...response.data.links],
+                });
+            }
+        }
     };
 
     // submit form to add new product to database or edit a product
@@ -66,7 +100,49 @@ const ProductForm = ({ title, description, price, _id }: ProductType) => {
                     placeholder="product name"
                     onChange={AddTitle}
                 ></input>
-                <label htmlFor="pdescription">Description</label>
+                <label>Photos</label>
+                <div className={styles.photos}>
+                    <div className={styles.photos__add}>
+                        <label>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                width="16px"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                                />
+                            </svg>
+                            <div>Upload</div>
+                            <input
+                                type="file"
+                                onChange={uploadImages}
+                                className={styles.hidden}
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        {!!product.images?.length ? (
+                            product.images.map((link) => (
+                                <div className={styles.photos__item} key={link}>
+                                    <img
+                                        src={link}
+                                        alt=""
+                                        className={styles.photos__img}
+                                    />
+                                </div>
+                            ))
+                        ) : (
+                            <div>No photos in this product</div>
+                        )}
+                    </div>
+                </div>
+                <label htmlFor="description">Description</label>
                 <textarea
                     value={product.description}
                     onChange={AddDescription}
