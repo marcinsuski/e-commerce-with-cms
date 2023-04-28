@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
+import Loader from "./Loader";
+import { ReactSortable } from "react-sortablejs";
 
 export interface ProductType {
     title?: string;
@@ -28,6 +30,8 @@ const ProductForm = ({
     const [product, setProduct] = useState<ProductType>(
         { title, description, price, images } || initialState
     );
+    const [isUploading, setIsUploading] = useState(false);
+
     const router = useRouter();
 
     // add product title to state
@@ -57,6 +61,7 @@ const ProductForm = ({
     const uploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target?.files;
         if (files && files?.length > 0) {
+            setIsUploading(true);
             const data = new FormData();
             for (const file of files) {
                 data.append("file", file);
@@ -74,7 +79,15 @@ const ProductForm = ({
                     images: [...response.data.links],
                 });
             }
+            setIsUploading(false);
         }
+    };
+
+    const updateImagesOrder = (newImages: string[]) => {
+        setProduct({
+            ...product,
+            images: [...newImages],
+        });
     };
 
     // submit form to add new product to database or edit a product
@@ -102,6 +115,32 @@ const ProductForm = ({
                 ></input>
                 <label>Photos</label>
                 <div className={styles.photos}>
+                    <div>
+                        <ReactSortable
+                            className={styles.photos__list}
+                            list={product.images as any}
+                            setList={updateImagesOrder as any}
+                        >
+                            {!!product.images?.length &&
+                                product.images.map((link) => (
+                                    <div
+                                        className={styles.photos__item}
+                                        key={link}
+                                    >
+                                        <img
+                                            src={link}
+                                            alt=""
+                                            className={styles.photos__img}
+                                        />
+                                    </div>
+                                ))}
+                        </ReactSortable>
+                    </div>
+                    {isUploading && (
+                        <div className={styles.upload}>
+                            <Loader />
+                        </div>
+                    )}
                     <div className={styles.photos__add}>
                         <label>
                             <svg
@@ -125,21 +164,6 @@ const ProductForm = ({
                                 className={styles.hidden}
                             />
                         </label>
-                    </div>
-                    <div>
-                        {!!product.images?.length ? (
-                            product.images.map((link) => (
-                                <div className={styles.photos__item} key={link}>
-                                    <img
-                                        src={link}
-                                        alt=""
-                                        className={styles.photos__img}
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <div>No photos in this product</div>
-                        )}
                     </div>
                 </div>
                 <label htmlFor="description">Description</label>

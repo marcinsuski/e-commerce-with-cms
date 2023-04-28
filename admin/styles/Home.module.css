@@ -255,6 +255,11 @@ td.basic__table_buttons {
     visibility: hidden;
 }
 
+.photos__list {
+    display: flex;
+    gap: 0.4rem;
+}
+
 .photos__item {
     height: 4rem;
     width: 4rem;
@@ -273,5 +278,11 @@ td.basic__table_buttons {
 }
 
 .photos__item img {
+    height: 4rem;
+}
+
+.upload {
+    display: flex;
+    align-items: center;
     height: 4rem;
 }
