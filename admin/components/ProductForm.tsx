@@ -20,7 +20,7 @@ const initialState = {
     images: [],
 };
 
-const ProductForm = ({
+const ProductForm: React.FC = ({
     title,
     description,
     price,
@@ -115,26 +115,32 @@ const ProductForm = ({
                 ></input>
                 <label>Photos</label>
                 <div className={styles.photos}>
-                    <div>
-                        <ReactSortable
-                            className={styles.photos__list}
-                            list={product.images as any}
-                            setList={updateImagesOrder as any}
-                        >
-                            {!!product.images?.length &&
-                                product.images.map((link) => (
-                                    <div
-                                        className={styles.photos__item}
-                                        key={link}
-                                    >
-                                        <img
-                                            src={link}
-                                            alt=""
-                                            className={styles.photos__img}
-                                        />
-                                    </div>
-                                ))}
-                        </ReactSortable>
+                    <div className={styles.photos__list}>
+                        {/* check if images exist when adding new product. Otherwise ReactSortable returns error that it cannot iterate through empty array. */}
+                        {product.images?.length ? (
+                            <ReactSortable
+                                className={styles.photos__list}
+                                list={product.images as any}
+                                setList={updateImagesOrder as any}
+                            >
+                                {/* verify if images exist. If so, map and render images */}
+                                {!!product.images?.length &&
+                                    product.images.map((link) => (
+                                        <div
+                                            className={styles.photos__item}
+                                            key={link}
+                                        >
+                                            <img
+                                                src={link}
+                                                alt=""
+                                                className={styles.photos__img}
+                                            />
+                                        </div>
+                                    ))}
+                            </ReactSortable>
+                        ) : (
+                            []
+                        )}
                     </div>
                     {isUploading && (
                         <div className={styles.upload}>

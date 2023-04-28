@@ -1,6 +1,5 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import Nav from "../components/Nav";
 import Layout from "../components/Layout";
 import { useSession, signIn, signOut } from "next-auth/react";
 
