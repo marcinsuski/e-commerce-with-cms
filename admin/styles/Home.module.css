@@ -137,11 +137,16 @@ button.newproduct__btn:hover {
     border: none;
     outline-offset: 1px;
     cursor: pointer;
+    transition: 300ms ease;
 }
 
 .btn_primary:focus {
     outline-offset: 1px;
     outline: 2px solid var(--blue);
+}
+
+.btn_primary:hover {
+    transform: scale(1.1);
 }
 
 table.basic__table {

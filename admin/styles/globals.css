@@ -19,7 +19,8 @@ a {
 }
 
 input,
-textarea {
+textarea,
+select {
     width: 100%;
     border: 2px solid rgb(190, 189, 189);
     border-radius: 6px;
@@ -27,7 +28,8 @@ textarea {
     margin: 0.2rem 0 0.4rem 0;
 }
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: 1px solid var(--blue);
     border: 2px solid var(--blue);
 }
