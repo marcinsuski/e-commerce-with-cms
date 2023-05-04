@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.css";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { withSwal } from "react-sweetalert2";
 
 export type CategoryType = {
     _id?: string;
     name: string;
-    parent: CategoryType | undefined;
+    parent: CategoryType | null;
 };
 
-const Categories: React.FC = () => {
+export type AlertResult = {
+    isConfirmed: boolean;
+    isDenied: boolean;
+    isDismissed: boolean;
+    value: boolean;
+};
+
+const Categories = ({ swal }: any) => {
     const [editedCategory, setEditedCategory] = useState<CategoryType | null>(
         null
     );
@@ -23,7 +31,7 @@ const Categories: React.FC = () => {
     const fecthCategories = () => {
         axios
             .get("/api/categories")
-            .then((res) => {
+            .then((res: AxiosResponse<any, any>) => {
                 setCategories(res.data);
             })
             .catch((err) => {
@@ -55,12 +63,40 @@ const Categories: React.FC = () => {
         fecthCategories();
     };
 
+    // edit category data
     const editCategory = (category: CategoryType) => {
         setEditedCategory(category);
         setName(category.name);
         category.parent?._id?.length
             ? setParentCategory(category.parent?._id)
             : setParentCategory("");
+    };
+
+    // delete category modal
+    const deleteCategory = (category: CategoryType) => {
+        swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to delete "${category.name}"?`,
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+            confirmButtonText: "Yes, Delete!",
+            confirmButtonColor: "#d55",
+            reverseButtons: true,
+        })
+            .then(async (result: AlertResult) => {
+                const { _id } = category;
+                if (result.isConfirmed) {
+                    try {
+                        await axios.delete(`/api/categories?_id=${_id}`);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                    fecthCategories();
+                }
+            })
+            .catch((error) => {
+                // when promise rejected...
+            });
     };
 
     return (
@@ -115,7 +151,7 @@ const Categories: React.FC = () => {
                 </thead>
                 <tbody>
                     {categories.length > 0
-                        ? categories.map((category) => (
+                        ? categories.map((category: CategoryType) => (
                               <tr>
                                   <td>{category?.name}</td>
                                   <td>{category.parent?.name}</td>
@@ -126,7 +162,12 @@ const Categories: React.FC = () => {
                                       >
                                           Edit
                                       </button>
-                                      <button className={styles.btn_primary}>
+                                      <button
+                                          className={styles.btn_primary}
+                                          onClick={() =>
+                                              deleteCategory(category)
+                                          }
+                                      >
                                           Delete
                                       </button>
                                   </td>
@@ -139,4 +180,6 @@ const Categories: React.FC = () => {
     );
 };
 
-export default Categories;
+export default withSwal(({ swal }: any, ref: any) => (
+    <Categories swal={swal} />
+));
