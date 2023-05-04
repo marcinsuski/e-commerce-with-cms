@@ -94,8 +94,8 @@ const Categories = ({ swal }: any) => {
                     fecthCategories();
                 }
             })
-            .catch((error) => {
-                // when promise rejected...
+            .catch((error: {}) => {
+                console.log(error);
             });
     };
 

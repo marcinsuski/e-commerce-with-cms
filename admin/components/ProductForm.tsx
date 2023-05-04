@@ -1,9 +1,10 @@
-import axios from "axios";
-import React, { useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import Loader from "./Loader";
 import { ReactSortable } from "react-sortablejs";
+import { CategoryType } from "../pages/categories";
 
 export interface ProductType {
     title?: string;
@@ -11,6 +12,7 @@ export interface ProductType {
     price?: number;
     _id?: number;
     images?: string[];
+    category?: string | "";
 }
 
 const initialState = {
@@ -18,6 +20,7 @@ const initialState = {
     description: "",
     price: 0,
     images: [],
+    category: "",
 };
 
 const ProductForm: React.FC = ({
@@ -26,13 +29,20 @@ const ProductForm: React.FC = ({
     price,
     _id,
     images,
+    category,
 }: ProductType) => {
     const [product, setProduct] = useState<ProductType>(
-        { title, description, price, images } || initialState
+        { title, description, price, images, category } || initialState
     );
     const [isUploading, setIsUploading] = useState(false);
-
+    const [categories, setCategories] = useState<CategoryType[]>([]);
     const router = useRouter();
+
+    useEffect(() => {
+        axios.get("/api/categories").then((result: AxiosResponse<any, any>) => {
+            setCategories(result.data);
+        });
+    }, []);
 
     // add product title to state
     const AddTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +67,15 @@ const ProductForm: React.FC = ({
             price: parseFloat(e.target.value),
         });
     };
+
+    // add category to state
+    const addCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setProduct({
+            ...product,
+            category: e.target.value,
+        });
+    };
+
     // add product images to state
     const uploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target?.files;
@@ -113,6 +132,16 @@ const ProductForm: React.FC = ({
                     placeholder="product name"
                     onChange={AddTitle}
                 ></input>
+                <label>Category</label>
+                <select onChange={addCategory} value={category}>
+                    <option value="">Uncategorized</option>
+                    {categories.length > 0 &&
+                        categories.map((category: CategoryType) => (
+                            <option value={category._id} key={category._id}>
+                                {category.name}
+                            </option>
+                        ))}
+                </select>
                 <label>Photos</label>
                 <div className={styles.photos}>
                     <div className={styles.photos__list}>

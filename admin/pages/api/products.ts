@@ -21,19 +21,23 @@ export default async function handle(
     }
     // POST - /api/products/new
     if (method === "POST") {
-        const { title, description, price, images } = req.body;
+        const { title, description, price, images, category } = req.body;
         const productDoc = await Product.create({
             title,
             description,
             price,
             images,
+            category,
         });
         res.status(201).json(productDoc);
     }
     // PUT - /api/products/id
     if (method === "PUT") {
-        const { title, description, price, images, _id } = req.body;
-        await Product.updateOne({ _id }, { title, description, price, images });
+        const { title, description, price, images, category, _id } = req.body;
+        await Product.updateOne(
+            { _id },
+            { title, description, price, images, category }
+        );
         res.status(204).json(true);
     }
 
