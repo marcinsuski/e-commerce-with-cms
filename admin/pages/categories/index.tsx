@@ -8,6 +8,7 @@ export type CategoryType = {
     _id?: string;
     name: string;
     parent: CategoryType | null;
+    properties: PropertyType[] | [];
 };
 
 export type AlertResult = {
@@ -19,7 +20,7 @@ export type AlertResult = {
 
 export type PropertyType = {
     name: string;
-    values: string;
+    values: string | string[];
 };
 
 const Categories = ({ swal }: any) => {
@@ -51,7 +52,14 @@ const Categories = ({ swal }: any) => {
     // save the form data
     const saveCategory = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = { name, parentCategory };
+        const data = {
+            name,
+            parentCategory,
+            properties: properties.map(({ name, values }: PropertyType) => ({
+                name: name,
+                values: values,
+            })),
+        };
         if (editedCategory) {
             try {
                 await axios.put("/api/categories", {
@@ -71,6 +79,7 @@ const Categories = ({ swal }: any) => {
         }
         setName("");
         setParentCategory("");
+        setProperties([]);
         fecthCategories();
     };
 
@@ -78,6 +87,9 @@ const Categories = ({ swal }: any) => {
     const editCategory = (category: CategoryType) => {
         setEditedCategory(category);
         setName(category.name);
+
+        setProperties(category.properties);
+
         category.parent?._id?.length
             ? setParentCategory(category.parent?._id)
             : setParentCategory("");
@@ -151,6 +163,7 @@ const Categories = ({ swal }: any) => {
     const cancelEditingCategory = () => {
         setEditedCategory(null);
         setName("");
+        setProperties([]);
         setParentCategory("");
     };
 
@@ -228,7 +241,8 @@ const Categories = ({ swal }: any) => {
                         >
                             Add new property
                         </button>
-                        {properties.length > 0 &&
+                        {properties &&
+                            properties.length > 0 &&
                             properties.map((property, index) => (
                                 <div className={styles.properties__grid}>
                                     <label
