@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import axios from "axios";
-import { ProductType } from "../../components/ProductForm";
+import { ProductType } from "../../types/types";
 
 const Products = () => {
     const [products, setProducts] = useState<ProductType[]>([]);

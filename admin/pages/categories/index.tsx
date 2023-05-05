@@ -3,25 +3,8 @@ import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.css";
 import axios, { AxiosResponse } from "axios";
 import { withSwal } from "react-sweetalert2";
-
-export type CategoryType = {
-    _id?: string;
-    name: string;
-    parent: CategoryType | null;
-    properties: PropertyType[] | [];
-};
-
-export type AlertResult = {
-    isConfirmed: boolean;
-    isDenied: boolean;
-    isDismissed: boolean;
-    value: boolean;
-};
-
-export type PropertyType = {
-    name: string;
-    values: string | string[];
-};
+import { AlertResult, CategoryType } from "../../types/types";
+import { PropertyType } from "../../types/types";
 
 const Categories = ({ swal }: any) => {
     const [editedCategory, setEditedCategory] = useState<CategoryType | null>(

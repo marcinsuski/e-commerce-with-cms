@@ -4,16 +4,7 @@ import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import Loader from "./Loader";
 import { ReactSortable } from "react-sortablejs";
-import { CategoryType } from "../pages/categories";
-
-export interface ProductType {
-    title?: string;
-    description?: string | undefined;
-    price?: number;
-    _id?: number;
-    images?: string[];
-    category?: string | "";
-}
+import { CategoryType, ProductType, PropertyType } from "../types/types";
 
 const initialState = {
     title: "",
@@ -121,6 +112,23 @@ const ProductForm: React.FC = ({
         router.push("/products");
     };
 
+    const propertiesToFill: {}[] = [];
+    if (categories.length > 0 && product.category) {
+        let catInfo = categories.find(({ _id }) => _id === product.category);
+        propertiesToFill.push({ ...catInfo?.properties });
+        while (catInfo?.parent?._id) {
+            const parentCategory = categories.find(
+                ({ _id }) => _id === catInfo?.parent?._id
+            );
+            if (parentCategory) {
+                propertiesToFill.push(...parentCategory.properties);
+                catInfo = parentCategory;
+            }
+        }
+    }
+
+    console.log(propertiesToFill);
+
     return (
         <>
             <form onSubmit={saveProduct}>
@@ -142,6 +150,21 @@ const ProductForm: React.FC = ({
                             </option>
                         ))}
                 </select>
+                {propertiesToFill.length > 0 &&
+                    propertiesToFill.map((property: PropertyType) => (
+                        <div className={styles.flex}>
+                            <div key={property.name}>{property?.name}</div>
+                            <select>
+                                {Array.isArray(property.values) &&
+                                    property.values?.map((value: string) => (
+                                        <option value={value} key={value}>
+                                            {value}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                    ))}
+
                 <label>Photos</label>
                 <div className={styles.photos}>
                     <div className={styles.photos__list}>
