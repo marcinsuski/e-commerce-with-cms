@@ -3,6 +3,8 @@ import multiparty from "multiparty";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import fs from "fs";
 import mime from "mime-types"; // lib to find file types
+import { mongooseConnect } from "../../lib/mongoose";
+import { isAdminRequest } from "./auth/[...nextauth]";
 
 const bucketName = "marcin-next-ecommerce";
 
@@ -11,6 +13,9 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    await mongooseConnect();
+    await isAdminRequest(req, res);
+
     const form = new multiparty.Form();
     const { fields, files }: any = await new Promise((resolve, reject) => {
         form.parse(req, (err, fields, files) => {

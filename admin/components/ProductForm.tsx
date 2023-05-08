@@ -128,18 +128,18 @@ const ProductForm: React.FC = ({
         });
     };
 
-    const propertiesToFill: {}[] = [];
+    const categoryProperties: {}[] = [];
     if (categories.length > 0 && product.category) {
         let catInfo = categories.find(({ _id }) => _id === product.category);
         if (!catInfo?.properties) {
-            propertiesToFill.push({ ...catInfo?.properties });
+            categoryProperties.push({ ...catInfo?.properties });
         }
         while (catInfo?.parent?._id) {
             const parentCategory = categories.find(
                 ({ _id }) => _id === catInfo?.parent?._id
             );
             if (parentCategory) {
-                propertiesToFill.push(...parentCategory.properties);
+                categoryProperties.push(...parentCategory.properties);
                 catInfo = parentCategory;
             }
         }
@@ -170,8 +170,8 @@ const ProductForm: React.FC = ({
                             </option>
                         ))}
                 </select>
-                {propertiesToFill.length > 0 &&
-                    propertiesToFill.map((property: PropertyType) => (
+                {categoryProperties.length > 0 &&
+                    categoryProperties.map((property: PropertyType) => (
                         <div className={styles.flex}>
                             <div key={property.name}>{property.name}</div>
                             <select

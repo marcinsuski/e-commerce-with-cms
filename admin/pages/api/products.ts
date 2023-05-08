@@ -1,6 +1,7 @@
 import { Product } from "../../models/Product";
 import { mongooseConnect } from "../../lib/mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { isAdminRequest } from "./auth/[...nextauth]";
 
 export default async function handle(
     req: NextApiRequest,
@@ -8,10 +9,9 @@ export default async function handle(
 ) {
     const { method } = req;
     await mongooseConnect();
+    await isAdminRequest(req, res);
 
-    // GET - /api/products
     if (method === "GET") {
-        // /api/products/id
         if (req.query?.id) {
             res.status(200).json(await Product.findOne({ _id: req.query.id }));
         } else {

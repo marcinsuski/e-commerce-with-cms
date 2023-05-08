@@ -8,6 +8,11 @@ const Nav: React.FC = () => {
     const router = useRouter();
     const { pathname } = router;
 
+    const logout = async () => {
+        await router.push("/");
+        await signOut();
+    };
+
     return (
         <aside className={styles.aside}>
             <Link href={"/"} className={styles.icon}>
@@ -153,10 +158,7 @@ const Nav: React.FC = () => {
                     </svg>
                     Settings
                 </Link>
-                <button
-                    onClick={() => signOut()}
-                    className={styles.btn__logout}
-                >
+                <button onClick={logout} className={styles.btn__logout}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
