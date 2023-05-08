@@ -39,6 +39,7 @@ const Nav: React.FC = () => {
                     className={pathname === "/" ? styles.active : ""}
                 >
                     <svg
+                        className={pathname === "/" ? styles.activeIcon : ""}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -62,6 +63,11 @@ const Nav: React.FC = () => {
                     }
                 >
                     <svg
+                        className={
+                            pathname.includes("/categories")
+                                ? styles.activeIcon
+                                : ""
+                        }
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -90,6 +96,11 @@ const Nav: React.FC = () => {
                     }
                 >
                     <svg
+                        className={
+                            pathname.includes("/products")
+                                ? styles.activeIcon
+                                : ""
+                        }
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -113,6 +124,11 @@ const Nav: React.FC = () => {
                     }
                 >
                     <svg
+                        className={
+                            pathname.includes("/orders")
+                                ? styles.activeIcon
+                                : ""
+                        }
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         width="18"
@@ -137,6 +153,11 @@ const Nav: React.FC = () => {
                     }
                 >
                     <svg
+                        className={
+                            pathname.includes("/settings")
+                                ? styles.activeIcon
+                                : ""
+                        }
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
