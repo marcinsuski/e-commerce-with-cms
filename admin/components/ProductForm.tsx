@@ -12,6 +12,7 @@ const initialState = {
     price: 0,
     images: [],
     category: "",
+    properies: {},
 };
 
 const ProductForm: React.FC = ({
@@ -21,11 +22,20 @@ const ProductForm: React.FC = ({
     _id,
     images,
     category,
+    properties,
 }: ProductType) => {
     const [product, setProduct] = useState<ProductType>(
-        { title, description, price, images, category } || initialState
+        {
+            title,
+            description,
+            price,
+            images,
+            category,
+            properties,
+        } || initialState
     );
     const [isUploading, setIsUploading] = useState(false);
+
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const router = useRouter();
 
@@ -35,7 +45,6 @@ const ProductForm: React.FC = ({
         });
     }, []);
 
-    // add product title to state
     const AddTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProduct({
             ...product,
@@ -43,7 +52,6 @@ const ProductForm: React.FC = ({
         });
     };
 
-    // add product description to state
     const AddDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setProduct({
             ...product,
@@ -51,7 +59,6 @@ const ProductForm: React.FC = ({
         });
     };
 
-    // add product price to state
     const AddPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProduct({
             ...product,
@@ -59,7 +66,6 @@ const ProductForm: React.FC = ({
         });
     };
 
-    // add category to state
     const addCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setProduct({
             ...product,
@@ -67,7 +73,6 @@ const ProductForm: React.FC = ({
         });
     };
 
-    // add product images to state
     const uploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target?.files;
         if (files && files?.length > 0) {
@@ -77,7 +82,7 @@ const ProductForm: React.FC = ({
                 data.append("file", file);
             }
             const response = await axios.post("/api/upload", data);
-            console.log(response.data);
+
             if (product.images) {
                 setProduct({
                     ...product,
@@ -100,7 +105,6 @@ const ProductForm: React.FC = ({
         });
     };
 
-    // submit form to add new product to database or edit a product
     const saveProduct = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (_id) {
@@ -108,14 +112,28 @@ const ProductForm: React.FC = ({
         } else {
             await axios.post("/api/products", product);
         }
-        setProduct(initialState); // clear inputs
+        setProduct(initialState);
         router.push("/products");
+    };
+
+    const setProductProp = (
+        propName: string,
+        e: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        const value = e.target.value;
+        const newProp = { ...product.properties, [propName]: value };
+        setProduct({
+            ...product,
+            properties: newProp,
+        });
     };
 
     const propertiesToFill: {}[] = [];
     if (categories.length > 0 && product.category) {
         let catInfo = categories.find(({ _id }) => _id === product.category);
-        propertiesToFill.push({ ...catInfo?.properties });
+        if (!catInfo?.properties) {
+            propertiesToFill.push({ ...catInfo?.properties });
+        }
         while (catInfo?.parent?._id) {
             const parentCategory = categories.find(
                 ({ _id }) => _id === catInfo?.parent?._id
@@ -126,8 +144,6 @@ const ProductForm: React.FC = ({
             }
         }
     }
-
-    console.log(propertiesToFill);
 
     return (
         <>
@@ -141,7 +157,11 @@ const ProductForm: React.FC = ({
                     onChange={AddTitle}
                 ></input>
                 <label>Category</label>
-                <select onChange={addCategory} value={category}>
+                <select
+                    onChange={addCategory}
+                    value={product.category}
+                    style={{ marginBottom: "0.5rem" }}
+                >
                     <option value="">Uncategorized</option>
                     {categories.length > 0 &&
                         categories.map((category: CategoryType) => (
@@ -153,8 +173,16 @@ const ProductForm: React.FC = ({
                 {propertiesToFill.length > 0 &&
                     propertiesToFill.map((property: PropertyType) => (
                         <div className={styles.flex}>
-                            <div key={property.name}>{property?.name}</div>
-                            <select>
+                            <div key={property.name}>{property.name}</div>
+                            <select
+                                value={
+                                    product.properties &&
+                                    product.properties[property.name]
+                                }
+                                onChange={(e) =>
+                                    setProductProp(property.name || "", e)
+                                }
+                            >
                                 {Array.isArray(property.values) &&
                                     property.values?.map((value: string) => (
                                         <option value={value} key={value}>
@@ -168,14 +196,12 @@ const ProductForm: React.FC = ({
                 <label>Photos</label>
                 <div className={styles.photos}>
                     <div className={styles.photos__list}>
-                        {/* check if images exist when adding new product. Otherwise ReactSortable returns error that it cannot iterate through empty array. */}
                         {product.images?.length ? (
                             <ReactSortable
                                 className={styles.photos__list}
                                 list={product.images as any}
                                 setList={updateImagesOrder as any}
                             >
-                                {/* verify if images exist. If so, map and render images */}
                                 {!!product.images?.length &&
                                     product.images.map((link) => (
                                         <div

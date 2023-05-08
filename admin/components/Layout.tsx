@@ -19,7 +19,7 @@ function Layout(props: Props) {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
 
-                <main>
+                <main className={styles.wrapper}>
                     <div className={styles.btn_wrapper}>
                         <button
                             data-type="login-btn"

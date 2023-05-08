@@ -40,7 +40,7 @@ const Categories = ({ swal }: any) => {
             parentCategory,
             properties: properties.map(({ name, values }: PropertyType) => ({
                 name: name,
-                values: values,
+                values: values ? values.split(",") : [],
             })),
         };
         if (editedCategory) {

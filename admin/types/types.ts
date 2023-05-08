@@ -14,7 +14,7 @@ export type AlertResult = {
 
 export type PropertyType = {
     name?: string;
-    values?: string[] | string;
+    values?: string;
 };
 
 export interface ProductType {
@@ -24,4 +24,5 @@ export interface ProductType {
     _id?: number;
     images?: string[];
     category?: string | "";
+    properties?: PropertyType;
 }
