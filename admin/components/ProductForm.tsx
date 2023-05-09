@@ -45,35 +45,39 @@ const ProductForm: React.FC = ({
         });
     }, []);
 
-    const AddTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const AddTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setProduct({
             ...product,
             title: e.target.value,
         });
     };
 
-    const AddDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const AddDescription = (
+        e: React.ChangeEvent<HTMLTextAreaElement>
+    ): void => {
         setProduct({
             ...product,
             description: e.target.value,
         });
     };
 
-    const AddPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const AddPrice = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setProduct({
             ...product,
             price: parseFloat(e.target.value),
         });
     };
 
-    const addCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const addCategory = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         setProduct({
             ...product,
             category: e.target.value,
         });
     };
 
-    const uploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadImages = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ): Promise<void> => {
         const files = e.target?.files;
         if (files && files?.length > 0) {
             setIsUploading(true);
@@ -98,14 +102,16 @@ const ProductForm: React.FC = ({
         }
     };
 
-    const updateImagesOrder = (newImages: string[]) => {
+    const updateImagesOrder = (newImages: string[]): void => {
         setProduct({
             ...product,
             images: [...newImages],
         });
     };
 
-    const saveProduct = async (e: React.FormEvent<HTMLFormElement>) => {
+    const saveProduct = async (
+        e: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
         e.preventDefault();
         if (_id) {
             await axios.put("/api/products", { ...product, _id });
@@ -119,7 +125,7 @@ const ProductForm: React.FC = ({
     const setProductProp = (
         propName: string,
         e: React.ChangeEvent<HTMLSelectElement>
-    ) => {
+    ): void => {
         const value = e.target.value;
         const newProp = { ...product.properties, [propName]: value };
         setProduct({
@@ -172,24 +178,35 @@ const ProductForm: React.FC = ({
                 </select>
                 {categoryProperties.length > 0 &&
                     categoryProperties.map((property: PropertyType) => (
-                        <div className={styles.flex}>
-                            <div key={property.name}>{property.name}</div>
-                            <select
-                                value={
-                                    product.properties &&
-                                    product.properties[property.name]
-                                }
-                                onChange={(e) =>
-                                    setProductProp(property.name || "", e)
-                                }
-                            >
-                                {Array.isArray(property.values) &&
-                                    property.values?.map((value: string) => (
-                                        <option value={value} key={value}>
-                                            {value}
-                                        </option>
-                                    ))}
-                            </select>
+                        <div>
+                            <label key={property.name}>
+                                {property.name &&
+                                    property.name.charAt(0).toUpperCase() +
+                                        property.name.slice(1)}
+                            </label>
+                            <div>
+                                <select
+                                    value={
+                                        product.properties &&
+                                        product.properties[property.name]
+                                    }
+                                    onChange={(e) =>
+                                        setProductProp(property.name || "", e)
+                                    }
+                                >
+                                    {Array.isArray(property.values) &&
+                                        property.values?.map(
+                                            (value: string) => (
+                                                <option
+                                                    value={value}
+                                                    key={value}
+                                                >
+                                                    {value}
+                                                </option>
+                                            )
+                                        )}
+                                </select>
+                            </div>
                         </div>
                     ))}
 

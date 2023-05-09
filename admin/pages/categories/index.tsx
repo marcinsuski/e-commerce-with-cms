@@ -21,7 +21,7 @@ const Categories = ({ swal }: any) => {
     }, []);
 
     // fetch categories when updated
-    const fecthCategories = () => {
+    const fecthCategories = (): void => {
         axios
             .get("/api/categories")
             .then((res: AxiosResponse<any, any>) => {
@@ -33,7 +33,9 @@ const Categories = ({ swal }: any) => {
     };
 
     // save the form data
-    const saveCategory = async (e: React.FormEvent<HTMLFormElement>) => {
+    const saveCategory = async (
+        e: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
         e.preventDefault();
         const data = {
             name,
@@ -67,7 +69,7 @@ const Categories = ({ swal }: any) => {
     };
 
     // edit category data
-    const editCategory = (category: CategoryType) => {
+    const editCategory = (category: CategoryType): void => {
         setEditedCategory(category);
         setName(category.name);
 
@@ -79,7 +81,7 @@ const Categories = ({ swal }: any) => {
     };
 
     // delete category modal
-    const deleteCategory = (category: CategoryType) => {
+    const deleteCategory = (category: CategoryType): void => {
         swal.fire({
             title: "Are you sure?",
             text: `Do you want to delete "${category.name}"?`,
@@ -105,7 +107,7 @@ const Categories = ({ swal }: any) => {
             });
     };
 
-    const addProperty = () => {
+    const addProperty = (): void => {
         setProperties((prev) => [...prev, { name: "", values: "" }]);
     };
 
@@ -114,7 +116,7 @@ const Categories = ({ swal }: any) => {
         index: number,
         property: PropertyType,
         newName: string
-    ) => {
+    ): void => {
         setProperties((prev) => {
             const properties = [...prev];
             properties[index].name = newName;
@@ -127,7 +129,7 @@ const Categories = ({ swal }: any) => {
         index: number,
         property: PropertyType,
         newValues: string
-    ) => {
+    ): void => {
         setProperties((prev) => {
             const properties = [...prev];
             properties[index].values = newValues;
@@ -135,7 +137,7 @@ const Categories = ({ swal }: any) => {
         });
     };
 
-    const removeProperty = (indexToRemove: number) => {
+    const removeProperty = (indexToRemove: number): void => {
         setProperties((prev) => {
             return [...prev].filter((p, pIndex) => {
                 return pIndex !== indexToRemove;
@@ -143,7 +145,7 @@ const Categories = ({ swal }: any) => {
         });
     };
 
-    const cancelEditingCategory = () => {
+    const cancelEditingCategory = (): void => {
         setEditedCategory(null);
         setName("");
         setProperties([]);
@@ -153,12 +155,7 @@ const Categories = ({ swal }: any) => {
     return (
         <Layout>
             <h2>Categories</h2>
-            <div
-                style={{
-                    padding: "1rem",
-                    boxShadow: "0px 0px 10px 5px rgb(220, 220, 220)",
-                }}
-            >
+            <div className={styles.category__form}>
                 <label htmlFor="category_name">
                     {editedCategory
                         ? `Edit category "${editedCategory.name}"`
@@ -214,16 +211,16 @@ const Categories = ({ swal }: any) => {
                         </div>
                     </div>
                     <div>
-                        <label style={{ marginRight: "0.5rem" }}>
-                            Properties
-                        </label>
-                        <button
-                            type="button"
-                            className={styles.btn__default}
-                            onClick={addProperty}
-                        >
-                            Add new property
-                        </button>
+                        <div className={styles.properties__header}>
+                            <label>Properties</label>
+                            <button
+                                type="button"
+                                className={styles.btn__basic}
+                                onClick={addProperty}
+                            >
+                                Add new property
+                            </button>
+                        </div>
                         {properties &&
                             properties.length > 0 &&
                             properties.map((property, index) => (
@@ -273,7 +270,7 @@ const Categories = ({ swal }: any) => {
                                     <button
                                         onClick={() => removeProperty(index)}
                                         type="button"
-                                        className={`${styles.properties__btn} ${styles.btn__default}`}
+                                        className={`${styles.properties__btn} ${styles.btn__delete}`}
                                     >
                                         Remove
                                     </button>
@@ -325,16 +322,46 @@ const Categories = ({ swal }: any) => {
                                               onClick={() =>
                                                   editCategory(category)
                                               }
-                                              className={styles.btn_primary}
+                                              className={styles.btn__edit}
                                           >
+                                              {" "}
+                                              <svg
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                  fill="none"
+                                                  viewBox="0 0 24 24"
+                                                  height="18px"
+                                                  strokeWidth={1.5}
+                                                  stroke="currentColor"
+                                              >
+                                                  <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                                  />
+                                              </svg>
                                               Edit
                                           </button>
                                           <button
-                                              className={styles.btn_primary}
+                                              className={styles.btn__delete}
                                               onClick={() =>
                                                   deleteCategory(category)
                                               }
                                           >
+                                              {" "}
+                                              <svg
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                  fill="none"
+                                                  height="18px"
+                                                  viewBox="0 0 24 24"
+                                                  strokeWidth={1.5}
+                                                  stroke="currentColor"
+                                              >
+                                                  <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                  />
+                                              </svg>
                                               Delete
                                           </button>
                                       </td>

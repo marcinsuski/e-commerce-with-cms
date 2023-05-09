@@ -6,12 +6,21 @@
 
 html,
 body {
-    --blue: rgb(12, 31, 138);
+    --blue: rgba(12, 31, 138, 1);
+    --blue2: rgb(36, 68, 254);
+    --bg: rgb(245, 245, 245);
+    --linkColor: rgb(45, 58, 77);
+    --lightBlue: rgba(114, 192, 255, 0.6);
     --teal: rgb(0, 251, 255);
-    --bg: rgb(220, 220, 220);
+    --navBtn: rgb(200, 204, 253);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+    --btn-red: rgb(239, 5, 5);
+    --btn-default: rgb(222, 222, 222);
     padding: 0;
     margin: 0;
     font-size: 100%;
+    background-color: var(--bg);
     font-family: "Source Sans Pro", sans-serif;
 }
 a {
@@ -23,26 +32,27 @@ input,
 textarea,
 select {
     width: 100%;
-    border: 2px solid rgb(190, 189, 189);
-    border-radius: 6px;
-    padding: 0.2rem;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 4px;
+    padding: 0.6rem 0.4rem;
+    margin: 0.4rem 0;
 }
 input:focus,
 textarea:focus,
 select:focus {
     outline: 1px solid var(--blue);
-    border: 2px solid var(--blue);
+    border: 1px solid var(--blue);
 }
 
 label {
-    color: var(--blue);
-    font-size: 1rem;
-    font-weight: 700;
+    color: var(--linkColor);
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 h1,
 h2,
 h3 {
     margin: 0.5rem 0 1rem 0;
-    color: var(--blue);
+    color: var(--linkColor);
 }

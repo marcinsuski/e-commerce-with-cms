@@ -7,7 +7,7 @@ import { authOptions, isAdminRequest } from "./auth/[...nextauth]";
 export default async function handle(
     req: NextApiRequest,
     res: NextApiResponse
-) {
+): Promise<void> {
     const { method } = req;
     await mongooseConnect();
     await isAdminRequest(req, res);

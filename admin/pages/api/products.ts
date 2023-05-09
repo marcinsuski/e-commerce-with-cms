@@ -6,7 +6,7 @@ import { isAdminRequest } from "./auth/[...nextauth]";
 export default async function handle(
     req: NextApiRequest,
     res: NextApiResponse
-) {
+): Promise<void> {
     const { method } = req;
     await mongooseConnect();
     await isAdminRequest(req, res);
@@ -15,11 +15,10 @@ export default async function handle(
         if (req.query?.id) {
             res.status(200).json(await Product.findOne({ _id: req.query.id }));
         } else {
-            // /api/products
             res.status(200).json(await Product.find());
         }
     }
-    // POST - /api/products/new
+
     if (method === "POST") {
         const { title, description, price, images, category, properties } =
             req.body;
@@ -33,7 +32,7 @@ export default async function handle(
         });
         res.status(201).json(productDoc);
     }
-    // PUT - /api/products/id
+
     if (method === "PUT") {
         const { title, description, price, images, category, properties, _id } =
             req.body;
@@ -44,7 +43,6 @@ export default async function handle(
         res.status(204).json(true);
     }
 
-    // DELETE - /api/products/id
     if (method === "DELETE") {
         if (req.query?.id) {
             await Product.deleteOne({ _id: req.query.id });

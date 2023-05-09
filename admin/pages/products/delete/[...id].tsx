@@ -3,8 +3,8 @@ import Layout from "../../../components/Layout";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { ParsedUrlQuery } from "querystring";
-import { ProductType } from "../../../components/ProductForm";
 import styles from "../../../styles/Home.module.css";
+import { ProductType } from "../../../types/types";
 
 const DeleteProductPage: React.FC = () => {
     const [productInfo, setProductInfo] = useState<ProductType | null>(null);
@@ -40,10 +40,10 @@ const DeleteProductPage: React.FC = () => {
                     justifyContent: "center",
                 }}
             >
-                <button className={styles.btn__red} onClick={deleteProduct}>
+                <button className={styles.btn__delete} onClick={deleteProduct}>
                     Yes
                 </button>
-                <button className={styles.btn__default} onClick={goBack}>
+                <button className={styles.btn__basic} onClick={goBack}>
                     No
                 </button>
             </div>

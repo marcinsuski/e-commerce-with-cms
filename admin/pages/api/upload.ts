@@ -12,7 +12,7 @@ const bucketName = "marcin-next-ecommerce";
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
-) {
+): Promise<void> {
     await mongooseConnect();
     await isAdminRequest(req, res);
 
@@ -23,7 +23,7 @@ export default async function handler(
             resolve({ fields, files });
         });
     });
-    // configure S3 client
+
     const client = new S3Client({
         region: "eu-central-1",
         credentials: {
@@ -46,7 +46,7 @@ export default async function handler(
                 ContentType: `${mime.lookup(file.path)}`,
             })
         );
-        // add to links array
+
         const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
         links.push(link);
     }

@@ -41,12 +41,13 @@ const Products = () => {
                                             pathname: "/products/edit/[id]",
                                             query: { id: product._id },
                                         }}
+                                        className={styles.btn__edit}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
-                                            height="12px"
                                             viewBox="0 0 24 24"
+                                            height="18px"
                                             strokeWidth={1.5}
                                             stroke="currentColor"
                                         >
@@ -63,11 +64,12 @@ const Products = () => {
                                             pathname: "/products/delete/[id]",
                                             query: { id: product._id },
                                         }}
+                                        className={styles.btn__delete}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
-                                            height="12px"
+                                            height="18px"
                                             viewBox="0 0 24 24"
                                             strokeWidth={1.5}
                                             stroke="currentColor"
