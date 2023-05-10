@@ -5,8 +5,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
     const { data: session } = useSession<boolean>();
-    if (!session) return;
-    const userName = session.user?.name;
+    const userName = session?.user?.name;
     const image = session?.user?.image;
 
     return (

@@ -15,12 +15,10 @@ const Categories = ({ swal }: any) => {
     const [categories, setCategories] = useState<CategoryType[]>([]); // array of categories
     const [properties, setProperties] = useState<PropertyType[]>([]); // array of properties
 
-    //fetch data on mount
     useEffect(() => {
         fecthCategories();
     }, []);
 
-    // fetch categories when updated
     const fecthCategories = (): void => {
         axios
             .get("/api/categories")
@@ -32,7 +30,6 @@ const Categories = ({ swal }: any) => {
             });
     };
 
-    // save the form data
     const saveCategory = async (
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
@@ -68,7 +65,6 @@ const Categories = ({ swal }: any) => {
         fecthCategories();
     };
 
-    // edit category data
     const editCategory = (category: CategoryType): void => {
         setEditedCategory(category);
         setName(category.name);
@@ -80,7 +76,6 @@ const Categories = ({ swal }: any) => {
             : setParentCategory("");
     };
 
-    // delete category modal
     const deleteCategory = (category: CategoryType): void => {
         swal.fire({
             title: "Are you sure?",
@@ -111,7 +106,6 @@ const Categories = ({ swal }: any) => {
         setProperties((prev) => [...prev, { name: "", values: "" }]);
     };
 
-    // add new property name to category
     const updatePropertyName = (
         index: number,
         property: PropertyType,
@@ -124,12 +118,11 @@ const Categories = ({ swal }: any) => {
         });
     };
 
-    // add new property values to category
     const updatePropertyValues = (
         index: number,
         property: PropertyType,
         newValues: string
-    ): void => {
+    ) => {
         setProperties((prev) => {
             const properties = [...prev];
             properties[index].values = newValues;
@@ -137,7 +130,7 @@ const Categories = ({ swal }: any) => {
         });
     };
 
-    const removeProperty = (indexToRemove: number): void => {
+    const removeProperty = (indexToRemove: number) => {
         setProperties((prev) => {
             return [...prev].filter((p, pIndex) => {
                 return pIndex !== indexToRemove;
