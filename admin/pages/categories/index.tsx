@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from "axios";
 import { withSwal } from "react-sweetalert2";
 import { AlertResult, CategoryType } from "../../types/types";
 import { PropertyType } from "../../types/types";
+import Loader from "../../components/Loader";
 
 const Categories = ({ swal }: any) => {
     const [editedCategory, setEditedCategory] = useState<CategoryType | null>(
