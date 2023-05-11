@@ -404,6 +404,7 @@ td.basic__table_buttons {
     align-items: center;
     border: 1px solid rgb(209, 209, 209);
     border-radius: 4px;
+
     overflow: hidden;
     height: 4rem;
     max-width: 4rem;
@@ -411,7 +412,7 @@ td.basic__table_buttons {
 }
 
 .photos__item img {
-    background-color: red;
+    background-color: transparent;
     height: 4rem;
 }
 

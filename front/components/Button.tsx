@@ -1,17 +1,25 @@
 import React from "react";
 import { css, styled } from "styled-components";
 
-interface StyleButton {
+export interface StyleButton {
     size?: string;
-    primary?: boolean;
-    white?: boolean;
-    outline?: boolean;
+    primary?: number;
+    white?: number;
+    outline?: number;
 }
 
-const StyledButton = styled.button<StyleButton>`
+export const ButtonStyle = css<StyleButton>`
     border-radius: 4px;
     border: 0;
+    padding: 6px 14px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    svg {
+        height: 18px;
+        margin-right: 5px;
+    }
     ${(props) =>
         props.white &&
         !props.outline &&
@@ -39,15 +47,21 @@ const StyledButton = styled.button<StyleButton>`
         css`
             font-size: 1.2rem;
             padding: 10px 20px;
+            svg {
+                height: 20px;
+            }
         `}
+`;
+
+const StyledButton = styled.button`
+    ${ButtonStyle}
 `;
 
 type Props = {
     children: React.ReactNode;
-    size?: string;
-    primary?: boolean;
-    white?: boolean;
-    outline?: boolean;
+    outline?: number;
+    white?: number;
+    primary?: number;
 };
 
 const Button = ({ children, ...rest }: Props) => {

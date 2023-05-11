@@ -136,7 +136,9 @@ const ProductForm: React.FC = ({
 
     const categoryProperties: {}[] = [];
     if (categories.length > 0 && product.category) {
-        let catInfo = categories.find(({ _id }) => _id === product.category);
+        let catInfo: CategoryType | undefined = categories.find(
+            ({ _id }) => _id === product.category
+        );
         if (!catInfo?.properties) {
             categoryProperties.push({ ...catInfo?.properties });
         }
