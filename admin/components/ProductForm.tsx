@@ -221,7 +221,7 @@ const ProductForm: React.FC = ({
                                 list={product.images as any}
                                 setList={updateImagesOrder as any}
                             >
-                                {!!product.images?.length &&
+                                {product.images.length &&
                                     product.images.map((link) => (
                                         <div
                                             className={styles.photos__item}

@@ -35,12 +35,13 @@ const Categories = ({ swal }: any) => {
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+
         const data = {
             name,
             parentCategory,
             properties: properties.map(({ name, values }: PropertyType) => ({
                 name: name,
-                values: values ? values.split(",") : [],
+                values: typeof values === "string" ? values.split(",") : values,
             })),
         };
         if (editedCategory) {

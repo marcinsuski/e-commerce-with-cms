@@ -6,7 +6,7 @@ type Props = {
 };
 
 const StyledDiv = styled.div`
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
 `;

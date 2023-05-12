@@ -1,3 +1,4 @@
+import { primary } from "@/lib/colors";
 import React from "react";
 import { css, styled } from "styled-components";
 
@@ -16,6 +17,8 @@ export const ButtonStyle = css<StyleButton>`
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
     svg {
         height: 18px;
         margin-right: 5px;
@@ -37,10 +40,19 @@ export const ButtonStyle = css<StyleButton>`
         `}
     ${(props) =>
         props.primary &&
+        !props.outline &&
         css`
-            background-color: rgb(56, 59, 230);
-            border: 1px solid rgb(56, 59, 230);
+            background-color: ${primary};
+            border: 1px solid ${primary};
             color: #fff;
+        `}
+            ${(props) =>
+        props.primary &&
+        props.outline &&
+        css`
+            background-color: transparent;
+            border: 1px solid ${primary};
+            color: ${primary};
         `}
     ${(props) =>
         props.size === "l" &&
