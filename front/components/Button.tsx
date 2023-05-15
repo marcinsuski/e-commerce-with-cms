@@ -6,6 +6,7 @@ type Props = {
     outline?: number;
     white?: number;
     primary?: number;
+    onClick: (e?: any) => void;
 };
 
 const Button = ({ children, ...rest }: Props) => {

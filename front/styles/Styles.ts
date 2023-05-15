@@ -67,10 +67,19 @@ export const ButtonStyle = css<StyleButton>`
 
 export const StyledButton = styled.button`
     ${ButtonStyle}
+    transition: 300ms ease;
+    &:hover {
+        background-color: ${primary};
+        color: white;
+    }
 `;
 
 export const StyledLink = styled(Link)<StyleButton>`
     ${ButtonStyle}
+    transition: 300ms ease;
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
 `;
 
 export const Center = styled.div`

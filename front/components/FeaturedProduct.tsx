@@ -1,16 +1,21 @@
 import React from "react";
-import { styled } from "styled-components";
 import Button from "./Button";
 import { ProductSchemaType } from "@/models/Product";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./CartIcon";
 import * as S from "@/styles/Styles";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addItem, removeItem, addFeaturedItem } from "@/store/cartSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type Props = {
     product: ProductSchemaType;
 };
 
 const FeaturedProduct = ({ product }: Props) => {
+    const dispatch = useAppDispatch();
+    const cart = useSelector((state: RootState) => state.cart);
     return (
         <S.Bg>
             <S.Center>
@@ -27,7 +32,12 @@ const FeaturedProduct = ({ product }: Props) => {
                                 >
                                     Read more
                                 </ButtonLink>
-                                <Button white={1}>
+                                <Button
+                                    white={1}
+                                    onClick={() =>
+                                        dispatch(addFeaturedItem(product))
+                                    }
+                                >
                                     <CartIcon />
                                     Add to cart
                                 </Button>
