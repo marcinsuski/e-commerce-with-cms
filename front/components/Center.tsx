@@ -1,18 +1,13 @@
 import React from "react";
 import { styled } from "styled-components";
+import * as S from "@/styles/Styles";
 
 type Props = {
     children: React.ReactNode;
 };
 
-const StyledDiv = styled.div`
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
-`;
-
 const Center = ({ children }: Props) => {
-    return <StyledDiv>{children}</StyledDiv>;
+    return <S.Center>{children}</S.Center>;
 };
 
 export default Center;
