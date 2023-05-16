@@ -1,34 +1,31 @@
 import Button from "@/components/Button";
 import Header from "@/components/Header";
+import Input from "@/components/Input";
 import Table from "@/components/Table";
 import { addItem, removeItem } from "@/store/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 import * as S from "@/styles/Styles";
+import { ProductType, ClientData } from "@/types/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 type Props = {};
 
-export interface ProductType {
-    title?: string;
-    description?: string | undefined;
-    price?: number;
-    _id?: number;
-    images?: string[];
-    category?: string | "";
-    properties?: PropertyType;
-}
-
-export type PropertyType = {
-    name?: string;
-    values?: string;
+const initialValue = {
+    name: "",
+    email: "",
+    street: "",
+    city: "",
+    postalCode: "",
+    country: "",
 };
 
 const CartPage = (props: Props) => {
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state: RootState) => state.cart);
     const [products, setProducts] = useState<ProductType[]>([]);
+    const [clientData, setClientData] = useState<ClientData>(initialValue);
     useEffect(() => {
         if (cart.items.length > 0) {
             axios.post("/api/cart", { ids: cart.items }).then((response) => {
@@ -36,6 +33,44 @@ const CartPage = (props: Props) => {
             });
         }
     }, [cart]);
+
+    const updateName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setClientData((prev) => {
+            return { ...prev, name: e.target.value };
+        });
+    };
+
+    const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setClientData((prev) => {
+            return { ...prev, email: e.target.value };
+        });
+    };
+
+    const updateStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setClientData((prev) => {
+            return { ...prev, street: e.target.value };
+        });
+    };
+
+    const updateCity = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setClientData((prev) => {
+            return { ...prev, city: e.target.value };
+        });
+    };
+
+    const updatePostalCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setClientData((prev) => {
+            return { ...prev, postalCode: e.target.value };
+        });
+    };
+
+    const updateCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setClientData((prev) => {
+            return { ...prev, country: e.target.value };
+        });
+    };
+
+    console.log(clientData);
 
     let total = 0;
     for (const productId of cart.items) {
@@ -142,17 +177,49 @@ const CartPage = (props: Props) => {
                     {!!cart && (
                         <S.Box className="infobox">
                             <h2>Order information</h2>
-                            <label htmlFor="address">Address</label>
-                            <input
+                            <Input
                                 type="text"
-                                id="address"
-                                placeholder="Address"
+                                placeholder="Name"
+                                value={clientData.name}
+                                id="name"
+                                onChange={(e) => updateName(e)}
                             />
-                            <label htmlFor="address2">Address 2</label>
-                            <input
+                            <Input
                                 type="text"
-                                id="adddress2"
-                                placeholder="Addres 2"
+                                placeholder="Email"
+                                value={clientData.email}
+                                id="email"
+                                onChange={(e) => updateEmail(e)}
+                            />
+                            <Input
+                                type="text"
+                                placeholder="Street Address"
+                                value={clientData.street}
+                                id="street"
+                                onChange={(e) => updateStreet(e)}
+                            />
+                            <S.CityHolder>
+                                <Input
+                                    type="text"
+                                    placeholder="City"
+                                    value={clientData.city}
+                                    id="city"
+                                    onChange={(e) => updateCity(e)}
+                                />
+                                <Input
+                                    type="text"
+                                    placeholder="Postal Code"
+                                    value={clientData.postalCode}
+                                    id="postalCode"
+                                    onChange={(e) => updatePostalCode(e)}
+                                />
+                            </S.CityHolder>
+                            <Input
+                                type="text"
+                                placeholder="Country"
+                                value={clientData.country}
+                                id="country"
+                                onChange={(e) => updateCountry(e)}
                             />
                             <Button black={1} block={1}>
                                 Continue to checkout

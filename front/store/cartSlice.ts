@@ -22,7 +22,6 @@ export const cartSlice = createSlice({
                 JSON.stringify(state.items.map((item) => item))
             );
         },
-
         removeItem: (state, payload) => {
             const { _id } = payload.payload;
             const pos = state.items.indexOf(_id);

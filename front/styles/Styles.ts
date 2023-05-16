@@ -306,3 +306,19 @@ export const ProductImageBox = styled.div`
 export const QuantityLabel = styled.span`
     padding: 0 6px;
 `;
+
+//Input.tsx
+
+export const StyledInput = styled.input`
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+`;
+
+export const CityHolder = styled.div`
+    display: flex;
+    gap: 5px;
+`;
