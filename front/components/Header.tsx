@@ -6,7 +6,7 @@ import { RootState } from "@/store/store";
 const Header = () => {
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state: RootState) => state.cart);
-    console.log(cart.items);
+
     return (
         <S.StyledHeader>
             <S.Center>

@@ -37,7 +37,7 @@ const ProductBox = (product: Props) => {
                     <Button
                         primary={1}
                         outline={1}
-                        onClick={() => dispatch(addItem(product._id))}
+                        onClick={() => dispatch(addItem(product))}
                     >
                         Add to cart
                     </Button>

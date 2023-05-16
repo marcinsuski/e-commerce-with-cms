@@ -5,7 +5,7 @@ import ButtonLink from "./ButtonLink";
 import CartIcon from "./CartIcon";
 import * as S from "@/styles/Styles";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addItem, removeItem, addFeaturedItem } from "@/store/cartSlice";
+import { addItem, removeItem } from "@/store/cartSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
@@ -34,9 +34,7 @@ const FeaturedProduct = ({ product }: Props) => {
                                 </ButtonLink>
                                 <Button
                                     white={1}
-                                    onClick={() =>
-                                        dispatch(addFeaturedItem(product))
-                                    }
+                                    onClick={() => dispatch(addItem(product))}
                                 >
                                     <CartIcon />
                                     Add to cart

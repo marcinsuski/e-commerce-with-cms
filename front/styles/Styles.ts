@@ -1,12 +1,14 @@
 import { css, styled } from "styled-components";
-import { primary } from "@/lib/colors";
+import { hoverColor, primary, secondary } from "@/lib/colors";
 import Link from "next/link";
 
 export interface StyleButton {
     size?: string;
     primary?: number;
     white?: number;
+    black?: number;
     outline?: number;
+    block?: number;
 }
 
 export const ButtonStyle = css<StyleButton>`
@@ -17,12 +19,18 @@ export const ButtonStyle = css<StyleButton>`
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 500;
     font-family: "Poppins", sans-serif;
     svg {
         height: 18px;
         margin-right: 5px;
     }
+    ${(props) =>
+        props.block &&
+        css`
+            display: block;
+            width: 100%;
+        `}
     ${(props) =>
         props.white &&
         !props.outline &&
@@ -38,12 +46,27 @@ export const ButtonStyle = css<StyleButton>`
             color: #fff;
             border: 1px solid #fff;
         `}
+            ${(props) =>
+        props.black &&
+        !props.outline &&
+        css`
+            background-color: #000;
+            color: #fff;
+        `}
+    ${(props) =>
+        props.black &&
+        props.outline &&
+        css`
+            background-color: transparent;
+            color: #000;
+            border: 1px solid #000;
+        `}
   ${(props) =>
         props.primary &&
         !props.outline &&
         css`
-            background-color: ${primary};
-            border: 1px solid ${primary};
+            background-color: ${secondary};
+            border: 1px solid ${secondary};
             color: #fff;
         `}
           ${(props) =>
@@ -51,8 +74,12 @@ export const ButtonStyle = css<StyleButton>`
         props.outline &&
         css`
             background-color: transparent;
-            border: 1px solid ${primary};
-            color: ${primary};
+            border: 1px solid ${secondary};
+            color: ${secondary};
+            &:hover {
+                background-color: ${secondary};
+                color: #fff;
+            }
         `}
   ${(props) =>
         props.size === "l" &&
@@ -69,8 +96,7 @@ export const StyledButton = styled.button`
     ${ButtonStyle}
     transition: 300ms ease;
     &:hover {
-        background-color: ${primary};
-        color: white;
+        scale: 1.1;
     }
 `;
 
@@ -78,7 +104,7 @@ export const StyledLink = styled(Link)<StyleButton>`
     ${ButtonStyle}
     transition: 300ms ease;
     &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+        scale: 1.1;
     }
 `;
 
@@ -215,4 +241,68 @@ export const PriceRow = styled.div`
 export const Price = styled.div`
     font-size: 1.5rem;
     font-weight: 600;
+`;
+
+// cart/index.tsx
+
+export const ColumnsWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 40px;
+    margin-top: 40px;
+    @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+        grid-templte-rows: auto;
+        .infobox {
+            grid-row: 1;
+        }
+`;
+
+export const Box = styled.div`
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+ 
+}
+
+`;
+
+export const StyledTable = styled.table`
+    width: 100%;
+    th {
+        text-align: left;
+        text-transform: uppercase;
+        color: #aaa;
+        font-weight: 600;
+        font-size: 0.7rem;
+    }
+    td {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+`;
+
+export const ProductInfoCell = styled.td`
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`;
+
+export const ProductImageBox = styled.div`
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+        max-width: 70px;
+        max-height: 70px;
+    }
+`;
+
+export const QuantityLabel = styled.span`
+    padding: 0 6px;
 `;
