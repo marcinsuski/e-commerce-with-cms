@@ -3,10 +3,11 @@ import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { LineItems, OrderData, ProductSchemaType } from "@/types/types";
 import type { NextApiRequest, NextApiResponse } from "next";
+const stripe = require("stripe")(process.env.STRIPE_SK);
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<string>
+    res: NextApiResponse
 ) {
     if (req.method !== "POST") {
         res.json("Should be a POST request");
@@ -22,7 +23,7 @@ export default async function handler(
         products,
     }: OrderData = req.body;
     await mongooseConnect();
-    const productsIds: string[] = products.split(",");
+    const productsIds: string[] = products;
     const uniqueProductIds: string[] = [...new Set(productsIds)];
     const productsInformation: ProductSchemaType[] = await Product.find({
         _id: uniqueProductIds,
@@ -41,7 +42,7 @@ export default async function handler(
                 price_data: {
                     currency: "USD",
                     product_data: { name: productDetails.title },
-                    unit_amount: productQuantity * productDetails.price,
+                    unit_amount: productQuantity * productDetails.price * 100,
                 },
             });
         }
@@ -56,5 +57,18 @@ export default async function handler(
         street,
         country,
         paid: false,
+    });
+
+    const session = await stripe.checkout.sessions.create({
+        line_items,
+        mode: "payment",
+        customer_email: email,
+        success_url: `${process.env.PUBLIC_URL}/cart?success=1`,
+        cancel_url: `${process.env.PUBLIC_URL}/cart?canceled=1`,
+        metadata: { orderId: orderDoc._id.toString() },
+    });
+
+    res.json({
+        url: session.url,
     });
 }

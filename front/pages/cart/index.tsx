@@ -81,6 +81,36 @@ const CartPage = (props: Props) => {
         }
     }
 
+    const goToPayment = async () => {
+        const response = await axios.post("/api/checkout", {
+            name: clientData.name,
+            email: clientData.email,
+            city: clientData.city,
+            posalCode: clientData.postalCode,
+            street: clientData.street,
+            country: clientData.country,
+            products: cart.items,
+        });
+    };
+
+    if (window.location.href.includes("success")) {
+        return (
+            <>
+                <Header />
+                <S.Center>
+                    <S.ColumnsWrapper>
+                        <S.Box>
+                            <h1>Thank You for Your order</h1>
+                            <p>
+                                We will email you when your order will be sent.
+                            </p>
+                        </S.Box>
+                    </S.ColumnsWrapper>
+                </S.Center>
+            </>
+        );
+    }
+
     return (
         <>
             <Header />
@@ -175,72 +205,65 @@ const CartPage = (props: Props) => {
                     {!!cart && (
                         <S.Box className="infobox">
                             <h2>Order information</h2>
-                            <form method="post" action="/api/checkout">
+                            <Input
+                                type="text"
+                                placeholder="Name"
+                                value={clientData.name}
+                                id="name"
+                                name="name"
+                                required={true}
+                                onChange={(e) => updateName(e)}
+                            />
+                            <Input
+                                type="text"
+                                placeholder="Email"
+                                value={clientData.email}
+                                id="email"
+                                name="email"
+                                required={true}
+                                onChange={(e) => updateEmail(e)}
+                            />
+                            <Input
+                                type="text"
+                                placeholder="Street Address"
+                                value={clientData.street}
+                                id="street"
+                                name="street"
+                                required={true}
+                                onChange={(e) => updateStreet(e)}
+                            />
+                            <S.CityHolder>
                                 <Input
                                     type="text"
-                                    placeholder="Name"
-                                    value={clientData.name}
-                                    id="name"
-                                    name="name"
+                                    placeholder="City"
+                                    value={clientData.city}
+                                    id="city"
+                                    name="city"
                                     required={true}
-                                    onChange={(e) => updateName(e)}
+                                    onChange={(e) => updateCity(e)}
                                 />
                                 <Input
                                     type="text"
-                                    placeholder="Email"
-                                    value={clientData.email}
-                                    id="email"
-                                    name="email"
+                                    placeholder="Postal Code"
+                                    value={clientData.postalCode}
+                                    id="postalCode"
+                                    name="postalCode"
                                     required={true}
-                                    onChange={(e) => updateEmail(e)}
+                                    onChange={(e) => updatePostalCode(e)}
                                 />
-                                <Input
-                                    type="text"
-                                    placeholder="Street Address"
-                                    value={clientData.street}
-                                    id="street"
-                                    name="street"
-                                    required={true}
-                                    onChange={(e) => updateStreet(e)}
-                                />
-                                <S.CityHolder>
-                                    <Input
-                                        type="text"
-                                        placeholder="City"
-                                        value={clientData.city}
-                                        id="city"
-                                        name="city"
-                                        required={true}
-                                        onChange={(e) => updateCity(e)}
-                                    />
-                                    <Input
-                                        type="text"
-                                        placeholder="Postal Code"
-                                        value={clientData.postalCode}
-                                        id="postalCode"
-                                        name="postalCode"
-                                        required={true}
-                                        onChange={(e) => updatePostalCode(e)}
-                                    />
-                                </S.CityHolder>
-                                <Input
-                                    type="text"
-                                    placeholder="Country"
-                                    value={clientData.country}
-                                    id="country"
-                                    name="country"
-                                    required={true}
-                                    onChange={(e) => updateCountry(e)}
-                                />
-                                <input
-                                    type="hidden"
-                                    name="products"
-                                    value={cart.items.join(",")}
-                                />
-                                <Button black={1} block={1} type="submit">
-                                    Continue to checkout
-                                </Button>
-                            </form>
+                            </S.CityHolder>
+                            <Input
+                                type="text"
+                                placeholder="Country"
+                                value={clientData.country}
+                                id="country"
+                                name="country"
+                                required={true}
+                                onChange={(e) => updateCountry(e)}
+                            />
+                            <Button black={1} block={1} onClick={goToPayment}>
+                                Continue to checkout
+                            </Button>
                         </S.Box>
                     )}
                 </S.ColumnsWrapper>

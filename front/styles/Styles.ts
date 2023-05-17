@@ -251,7 +251,6 @@ export const ColumnsWrapper = styled.div`
     gap: 40px;
     margin-top: 40px;
     .infobox {
-    
         height: fit-content;
     }
     @media (max-width: 700px) {

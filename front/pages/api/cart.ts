@@ -2,11 +2,9 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Data = string[];
-
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse
 ) {
     await mongooseConnect();
     const ids = req.body.ids;
