@@ -1,16 +1,12 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { mongooseConnect } from "@/lib/mongoose";
-import { ProductSchemaType } from "@/models/Product";
 import { Product } from "@/models/Product";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Data = {
-    name: string[];
-};
+type Data = string[];
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<string[]>
+    res: NextApiResponse<Data>
 ) {
     await mongooseConnect();
     const ids = req.body.ids;

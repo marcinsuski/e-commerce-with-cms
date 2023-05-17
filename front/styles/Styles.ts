@@ -250,11 +250,16 @@ export const ColumnsWrapper = styled.div`
     grid-template-columns: 1.3fr 0.7fr;
     gap: 40px;
     margin-top: 40px;
+    .infobox {
+    
+        height: fit-content;
+    }
     @media (max-width: 700px) {
         grid-template-columns: 1fr;
         grid-templte-rows: auto;
         .infobox {
             grid-row: 1;
+            height: fit-content;
         }
 `;
 
@@ -314,7 +319,7 @@ export const StyledInput = styled.input`
     padding: 5px;
     margin-bottom: 5px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 4px;
     box-sizing: border-box;
 `;
 

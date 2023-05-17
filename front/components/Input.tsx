@@ -6,8 +6,10 @@ type Props = {
     type?: string;
     id?: string;
     placeholder?: string;
+    name?: string;
     value?: string | number | readonly string[] | undefined;
     onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+    required?: true | false;
 };
 
 const Input = (props: Props) => {

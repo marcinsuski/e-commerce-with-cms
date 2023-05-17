@@ -1,15 +1,5 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
-export interface ProductSchemaType {
-    _id: string;
-    title: string;
-    description?: string;
-    price: number;
-    images?: string[];
-    category?: string;
-    properties?: object;
-}
-
 const ProductSchema = new Schema(
     {
         title: { type: String, required: true },

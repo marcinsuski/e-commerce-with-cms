@@ -70,8 +70,6 @@ const CartPage = (props: Props) => {
         });
     };
 
-    console.log(clientData);
-
     let total = 0;
     for (const productId of cart.items) {
         if (products.length > 0) {
@@ -177,53 +175,72 @@ const CartPage = (props: Props) => {
                     {!!cart && (
                         <S.Box className="infobox">
                             <h2>Order information</h2>
-                            <Input
-                                type="text"
-                                placeholder="Name"
-                                value={clientData.name}
-                                id="name"
-                                onChange={(e) => updateName(e)}
-                            />
-                            <Input
-                                type="text"
-                                placeholder="Email"
-                                value={clientData.email}
-                                id="email"
-                                onChange={(e) => updateEmail(e)}
-                            />
-                            <Input
-                                type="text"
-                                placeholder="Street Address"
-                                value={clientData.street}
-                                id="street"
-                                onChange={(e) => updateStreet(e)}
-                            />
-                            <S.CityHolder>
+                            <form method="post" action="/api/checkout">
                                 <Input
                                     type="text"
-                                    placeholder="City"
-                                    value={clientData.city}
-                                    id="city"
-                                    onChange={(e) => updateCity(e)}
+                                    placeholder="Name"
+                                    value={clientData.name}
+                                    id="name"
+                                    name="name"
+                                    required={true}
+                                    onChange={(e) => updateName(e)}
                                 />
                                 <Input
                                     type="text"
-                                    placeholder="Postal Code"
-                                    value={clientData.postalCode}
-                                    id="postalCode"
-                                    onChange={(e) => updatePostalCode(e)}
+                                    placeholder="Email"
+                                    value={clientData.email}
+                                    id="email"
+                                    name="email"
+                                    required={true}
+                                    onChange={(e) => updateEmail(e)}
                                 />
-                            </S.CityHolder>
-                            <Input
-                                type="text"
-                                placeholder="Country"
-                                value={clientData.country}
-                                id="country"
-                                onChange={(e) => updateCountry(e)}
-                            />
-                            <Button black={1} block={1}>
-                                Continue to checkout
-                            </Button>
+                                <Input
+                                    type="text"
+                                    placeholder="Street Address"
+                                    value={clientData.street}
+                                    id="street"
+                                    name="street"
+                                    required={true}
+                                    onChange={(e) => updateStreet(e)}
+                                />
+                                <S.CityHolder>
+                                    <Input
+                                        type="text"
+                                        placeholder="City"
+                                        value={clientData.city}
+                                        id="city"
+                                        name="city"
+                                        required={true}
+                                        onChange={(e) => updateCity(e)}
+                                    />
+                                    <Input
+                                        type="text"
+                                        placeholder="Postal Code"
+                                        value={clientData.postalCode}
+                                        id="postalCode"
+                                        name="postalCode"
+                                        required={true}
+                                        onChange={(e) => updatePostalCode(e)}
+                                    />
+                                </S.CityHolder>
+                                <Input
+                                    type="text"
+                                    placeholder="Country"
+                                    value={clientData.country}
+                                    id="country"
+                                    name="country"
+                                    required={true}
+                                    onChange={(e) => updateCountry(e)}
+                                />
+                                <input
+                                    type="hidden"
+                                    name="products"
+                                    value={cart.items.join(",")}
+                                />
+                                <Button black={1} block={1} type="submit">
+                                    Continue to checkout
+                                </Button>
+                            </form>
                         </S.Box>
                     )}
                 </S.ColumnsWrapper>
