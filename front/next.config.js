@@ -4,6 +4,16 @@ const nextConfig = {
     compiler: {
         styledComponents: true,
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "marcin-next-ecommerce.s3.amazonaws.com",
+                port: "",
+                pathname: "/**",
+            },
+        ],
+    },
 };
 
 module.exports = nextConfig;

@@ -22,8 +22,9 @@ export default async function handler(
         country,
         products,
     }: OrderData = req.body;
+
     await mongooseConnect();
-    const productsIds: string[] = products;
+    const productsIds = products;
     const uniqueProductIds: string[] = [...new Set(productsIds)];
     const productsInformation: ProductSchemaType[] = await Product.find({
         _id: uniqueProductIds,
@@ -63,8 +64,8 @@ export default async function handler(
         line_items,
         mode: "payment",
         customer_email: email,
-        success_url: `${process.env.PUBLIC_URL}/cart?success=1`,
-        cancel_url: `${process.env.PUBLIC_URL}/cart?canceled=1`,
+        success_url: `${process.env.PUBLIC_URL}/cart?payment=success`,
+        cancel_url: `${process.env.PUBLIC_URL}/cart?payment=canceled`,
         metadata: { orderId: orderDoc._id.toString() },
     });
 

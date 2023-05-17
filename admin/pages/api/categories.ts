@@ -4,7 +4,7 @@ import { mongooseConnect } from "../../lib/mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions, isAdminRequest } from "./auth/[...nextauth]";
 
-export default async function handle(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ): Promise<void> {

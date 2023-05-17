@@ -2,13 +2,15 @@ import Button from "@/components/Button";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import Table from "@/components/Table";
-import { addItem, removeItem } from "@/store/cartSlice";
+import { addItem, clearCart, removeItem } from "@/store/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 import * as S from "@/styles/Styles";
 import { ProductType, ClientData } from "@/types/types";
 import axios from "axios";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 type Props = {};
 
@@ -26,6 +28,8 @@ const CartPage = (props: Props) => {
     const cart = useAppSelector((state: RootState) => state.cart);
     const [products, setProducts] = useState<ProductType[]>([]);
     const [clientData, setClientData] = useState<ClientData>(initialValue);
+    const router = useRouter();
+
     useEffect(() => {
         if (cart.items.length > 0) {
             axios.post("/api/cart", { ids: cart.items }).then((response) => {
@@ -80,128 +84,133 @@ const CartPage = (props: Props) => {
             total += price;
         }
     }
-
     const goToPayment = async () => {
         const response = await axios.post("/api/checkout", {
             name: clientData.name,
             email: clientData.email,
             city: clientData.city,
-            posalCode: clientData.postalCode,
+            postalCode: clientData.postalCode,
             street: clientData.street,
             country: clientData.country,
             products: cart.items,
         });
+        if (response.data.url) {
+            router.push(response.data.url);
+        }
     };
 
-    if (window.location.href.includes("success")) {
-        return (
-            <>
-                <Header />
-                <S.Center>
-                    <S.ColumnsWrapper>
-                        <S.Box>
-                            <h1>Thank You for Your order</h1>
-                            <p>
-                                We will email you when your order will be sent.
-                            </p>
-                        </S.Box>
-                    </S.ColumnsWrapper>
-                </S.Center>
-            </>
-        );
-    }
+    useEffect(() => {
+        if (router.query.payment === "success") {
+            dispatch(clearCart());
+        }
+    }, []);
 
     return (
         <>
             <Header />
             <S.Center>
                 <S.ColumnsWrapper>
-                    <S.Box className="cart">
-                        <h2>Cart</h2>
-                        {!cart.items.length && <div>Your cart is empty</div>}
-                        {cart.items.length > 0 && (
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {products.map((product) => (
-                                        <tr key={product._id}>
-                                            <S.ProductInfoCell>
-                                                <S.ProductImageBox>
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img
-                                                        src={
-                                                            product.images
-                                                                ? product
-                                                                      .images[0]
-                                                                : ""
+                    {router.query.payment === "success" ? (
+                        <S.Box>
+                            <h1>Thank You for Your order</h1>
+                            <p>
+                                We will email you when your order will be sent.
+                            </p>
+                        </S.Box>
+                    ) : (
+                        <S.Box className="cart">
+                            <h2>Cart</h2>
+                            {!cart.items.length && (
+                                <div>Your cart is empty</div>
+                            )}
+                            {cart.items.length > 0 && (
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {products.map((product) => (
+                                            <tr key={product._id}>
+                                                <S.ProductInfoCell>
+                                                    <S.ProductImageBox>
+                                                        <Image
+                                                            src={
+                                                                product.images
+                                                                    ? product
+                                                                          .images[0]
+                                                                    : ""
+                                                            }
+                                                            alt=""
+                                                            width={70}
+                                                            height={70}
+                                                        />
+                                                    </S.ProductImageBox>
+                                                    {product.title}:
+                                                </S.ProductInfoCell>
+                                                <td>
+                                                    <Button
+                                                        style={{
+                                                            padding: "0px 8px",
+                                                        }}
+                                                        onClick={() =>
+                                                            dispatch(
+                                                                removeItem(
+                                                                    product
+                                                                )
+                                                            )
                                                         }
-                                                        alt=""
-                                                    />
-                                                </S.ProductImageBox>
-                                                {product.title}:
-                                            </S.ProductInfoCell>
-                                            <td>
-                                                <Button
-                                                    style={{
-                                                        padding: "0px 8px",
-                                                    }}
-                                                    onClick={() =>
-                                                        dispatch(
-                                                            removeItem(product)
-                                                        )
-                                                    }
-                                                >
-                                                    -
-                                                </Button>
-                                                <S.QuantityLabel>
-                                                    {
+                                                    >
+                                                        -
+                                                    </Button>
+                                                    <S.QuantityLabel>
+                                                        {
+                                                            cart.items.filter(
+                                                                (id) =>
+                                                                    id ===
+                                                                    product._id?.toString()
+                                                            ).length
+                                                        }
+                                                    </S.QuantityLabel>
+                                                    <Button
+                                                        style={{
+                                                            padding: "0px 8px",
+                                                        }}
+                                                        onClick={() =>
+                                                            dispatch(
+                                                                addItem(product)
+                                                            )
+                                                        }
+                                                    >
+                                                        +
+                                                    </Button>
+                                                </td>
+                                                <td>
+                                                    $
+                                                    {cart.items &&
+                                                        product.price &&
                                                         cart.items.filter(
                                                             (id) =>
                                                                 id ===
                                                                 product._id?.toString()
-                                                        ).length
-                                                    }
-                                                </S.QuantityLabel>
-                                                <Button
-                                                    style={{
-                                                        padding: "0px 8px",
-                                                    }}
-                                                    onClick={() =>
-                                                        dispatch(
-                                                            addItem(product)
-                                                        )
-                                                    }
-                                                >
-                                                    +
-                                                </Button>
-                                            </td>
-                                            <td>
-                                                $
-                                                {cart.items &&
-                                                    product.price &&
-                                                    cart.items.filter(
-                                                        (id) =>
-                                                            id ===
-                                                            product._id?.toString()
-                                                    ).length * product.price}
-                                            </td>
+                                                        ).length *
+                                                            product.price}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        <tr>
+                                            <td></td>
+                                            <td>Total:</td>
+                                            <td>${total}</td>
                                         </tr>
-                                    ))}
-                                    <tr>
-                                        <td></td>
-                                        <td>Total:</td>
-                                        <td>${total}</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        )}
-                    </S.Box>
+                                    </tbody>
+                                </Table>
+                            )}
+                        </S.Box>
+                    )}
                     {!!cart && (
                         <S.Box className="infobox">
                             <h2>Order information</h2>

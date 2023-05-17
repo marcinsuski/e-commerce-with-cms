@@ -33,16 +33,14 @@ export interface ClientData {
 }
 
 export interface OrderData extends ClientData {
-    products: string;
+    products: string[];
 }
 
 export interface LineItems {
     quantity: number;
     price_data: {
         currency: "USD" | "EUR" | "GBP" | "PLN";
-        product_data: {
-            name: string;
-        };
+        product_data: { name: string };
         unit_amount: number;
     };
 }

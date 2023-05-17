@@ -214,12 +214,13 @@ table.basic__table {
     box-shadow: 0 0 5px 2px rgba(200, 200, 200, 0.6);
 }
 
-table.basic__table thead tr td {
+table.basic__table thead tr th {
     background-color: rgb(250, 250, 250);
     border-bottom: 1px solid var(--btn-default);
 }
 
-table.basic__table tr td {
+table.basic__table tr td,
+table.basic__table tr th {
     padding: 0.6rem;
     border: none;
 }
