@@ -6,16 +6,20 @@ export interface ProductSchemaType {
     images?: string[];
     category?: string;
     properties?: object;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface ProductType {
-    title?: string;
-    description?: string | undefined;
-    price?: number;
     _id?: number;
+    title?: string;
+    description?: string;
+    price?: number;
     images?: string[];
     category?: string | "";
     properties?: PropertyType;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export type PropertyType = {

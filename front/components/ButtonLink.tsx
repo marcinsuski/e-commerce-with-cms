@@ -1,8 +1,15 @@
 import Link from "next/link";
 import React from "react";
 import { styled } from "styled-components";
-import { ButtonStyle, StyleButton } from "@/styles/Styles";
-import * as S from "@/styles/Styles";
+import { ButtonStyle, StyleButton } from "./Button";
+
+export const StyledLink = styled(Link)<StyleButton>`
+    ${ButtonStyle}
+    transition: 300ms ease;
+    &:hover {
+        scale: 1.1;
+    }
+`;
 
 type Props = {
     children: React.ReactNode;
@@ -13,7 +20,7 @@ type Props = {
 };
 
 const ButtonLink = ({ children, ...rest }: Props) => {
-    return <S.StyledLink {...rest}>{children}</S.StyledLink>;
+    return <StyledLink {...rest}>{children}</StyledLink>;
 };
 
 export default ButtonLink;

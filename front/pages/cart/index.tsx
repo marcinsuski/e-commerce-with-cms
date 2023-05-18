@@ -12,6 +12,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Center from "@/components/Center";
+import WhiteBox from "@/components/WhiteBox";
 
 type Props = {};
 
@@ -116,14 +117,14 @@ const CartPage = (props: Props) => {
             <Center>
                 <S.ColumnsWrapper>
                     {router.query.payment === "success" ? (
-                        <S.Box>
+                        <WhiteBox>
                             <h1>Thank You for Your order</h1>
                             <p>
                                 We will email you when your order will be sent.
                             </p>
-                        </S.Box>
+                        </WhiteBox>
                     ) : (
-                        <S.Box className="cart">
+                        <WhiteBox className="cart">
                             <h2>Cart</h2>
                             {!cart.items.length && (
                                 <div>Your cart is empty</div>
@@ -214,10 +215,10 @@ const CartPage = (props: Props) => {
                                     </tbody>
                                 </Table>
                             )}
-                        </S.Box>
+                        </WhiteBox>
                     )}
                     {!!cart && (
-                        <S.Box className="infobox">
+                        <WhiteBox className="infobox">
                             <h2>Order information</h2>
                             <Input
                                 type="text"
@@ -278,7 +279,7 @@ const CartPage = (props: Props) => {
                             <Button black={1} block={1} onClick={goToPayment}>
                                 Continue to checkout
                             </Button>
-                        </S.Box>
+                        </WhiteBox>
                     )}
                 </S.ColumnsWrapper>
             </Center>
