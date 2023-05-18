@@ -20,9 +20,10 @@ const OrdersPage = (): JSX.Element => {
             <table className={styles.basic__table}>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Recipient</th>
-                        <th>Products</th>
+                        <th>DATE</th>
+                        <th>PAID</th>
+                        <th>RECIPIENT</th>
+                        <th>PRODUCTS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,9 @@ const OrdersPage = (): JSX.Element => {
                             <tr>
                                 <td>
                                     {new Date(order.createdAt).toLocaleString()}
+                                </td>
+                                <td className={order.paid ? `green` : `red`}>
+                                    {order.paid ? "YES" : "NO"}
                                 </td>
                                 <td>
                                     name: {order.name || "---"} <br />

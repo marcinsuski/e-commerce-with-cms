@@ -56,3 +56,13 @@ h3 {
     margin: 0.5rem 0 1rem 0;
     color: var(--linkColor);
 }
+
+.green {
+    color: rgb(6, 177, 6);
+    font-weight: 600;
+}
+
+.red {
+    color: rgb(255, 0, 0);
+    font-weight: 600;
+}

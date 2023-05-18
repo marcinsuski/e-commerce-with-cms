@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "./Button";
-import { ProductSchemaType } from "@/models/Product";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./CartIcon";
 import * as S from "@/styles/Styles";
@@ -8,6 +7,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addItem, removeItem } from "@/store/cartSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import Center from "./Center";
+import { ProductSchemaType } from "@/types/types";
 
 type Props = {
     product: ProductSchemaType;
@@ -18,7 +19,7 @@ const FeaturedProduct = ({ product }: Props) => {
     const cart = useSelector((state: RootState) => state.cart);
     return (
         <S.Bg>
-            <S.Center>
+            <Center>
                 <S.Wrapper>
                     <S.Column>
                         <div>
@@ -50,7 +51,7 @@ const FeaturedProduct = ({ product }: Props) => {
                         ></img>
                     </S.Column>
                 </S.Wrapper>
-            </S.Center>
+            </Center>
         </S.Bg>
     );
 };

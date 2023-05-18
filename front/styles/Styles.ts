@@ -108,12 +108,6 @@ export const StyledLink = styled(Link)<StyleButton>`
     }
 `;
 
-export const Center = styled.div`
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
-`;
-
 export const Bg = styled.div`
     background-color: #222;
     color: #fff;
@@ -163,27 +157,6 @@ export const ButtonsWrapper = styled.div`
         width: 100%;
         justify-content: center;
     }
-`;
-
-export const StyledHeader = styled.header`
-    background-color: #222;
-`;
-export const Logo = styled(Link)`
-    color: #fff;
-    text-decoration: none;
-`;
-export const HeaderWrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 20px;
-`;
-export const NavLink = styled(Link)`
-    color: #aaa;
-    text-decoration: none;
-`;
-export const StyledNav = styled.nav`
-    display: flex;
-    gap: 1rem;
 `;
 
 export const ProductsGrid = styled.div`

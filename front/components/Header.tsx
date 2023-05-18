@@ -2,28 +2,52 @@ import React from "react";
 import * as S from "@/styles/Styles";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
+import Center from "./Center";
+import { styled } from "styled-components";
+import Link from "next/link";
+
+export const StyledHeader = styled.header`
+    background-color: #222;
+`;
+export const Logo = styled(Link)`
+    color: #fff;
+    text-decoration: none;
+`;
+export const HeaderWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+`;
+export const NavLink = styled(Link)`
+    color: #aaa;
+    text-decoration: none;
+`;
+export const StyledNav = styled.nav`
+    display: flex;
+    gap: 1rem;
+`;
 
 const Header = () => {
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state: RootState) => state.cart);
 
     return (
-        <S.StyledHeader>
-            <S.Center>
-                <S.HeaderWrapper>
-                    <S.Logo href={"/"}>TechStore</S.Logo>
-                    <S.StyledNav>
-                        <S.NavLink href={"/"}>Home</S.NavLink>
-                        <S.NavLink href={"/products"}>All Products</S.NavLink>
-                        <S.NavLink href={"/categories"}>Categories</S.NavLink>
-                        <S.NavLink href={"/account"}>Account</S.NavLink>
-                        <S.NavLink href={"/cart"}>
+        <StyledHeader>
+            <Center>
+                <HeaderWrapper>
+                    <Logo href={"/"}>TechStore</Logo>
+                    <StyledNav>
+                        <NavLink href={"/"}>Home</NavLink>
+                        <NavLink href={"/products"}>All Products</NavLink>
+                        <NavLink href={"/categories"}>Categories</NavLink>
+                        <NavLink href={"/account"}>Account</NavLink>
+                        <NavLink href={"/cart"}>
                             Cart ({cart.items.length})
-                        </S.NavLink>
-                    </S.StyledNav>
-                </S.HeaderWrapper>
-            </S.Center>
-        </S.StyledHeader>
+                        </NavLink>
+                    </StyledNav>
+                </HeaderWrapper>
+            </Center>
+        </StyledHeader>
     );
 };
 

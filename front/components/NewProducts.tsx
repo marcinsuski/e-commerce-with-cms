@@ -1,7 +1,8 @@
-import { ProductSchemaType } from "@/models/Product";
 import React from "react";
 import ProductBox from "./ProductBox";
 import * as S from "@/styles/Styles";
+import Center from "./Center";
+import { ProductSchemaType } from "@/types/types";
 
 type Props = {
     products: ProductSchemaType[];
@@ -9,7 +10,7 @@ type Props = {
 
 const NewProducts = ({ products }: Props) => {
     return (
-        <S.Center>
+        <Center>
             <S.NewTitle>New Arrivals</S.NewTitle>
             <S.ProductsGrid>
                 {products.length > 0 &&
@@ -17,7 +18,7 @@ const NewProducts = ({ products }: Props) => {
                         <ProductBox key={product._id} {...product} />
                     ))}
             </S.ProductsGrid>
-        </S.Center>
+        </Center>
     );
 };
 

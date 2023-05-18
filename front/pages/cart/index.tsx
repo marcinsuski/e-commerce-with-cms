@@ -11,6 +11,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Center from "@/components/Center";
 
 type Props = {};
 
@@ -85,17 +86,21 @@ const CartPage = (props: Props) => {
         }
     }
     const goToPayment = async () => {
-        const response = await axios.post("/api/checkout", {
-            name: clientData.name,
-            email: clientData.email,
-            city: clientData.city,
-            postalCode: clientData.postalCode,
-            street: clientData.street,
-            country: clientData.country,
-            products: cart.items,
-        });
-        if (response.data.url) {
-            router.push(response.data.url);
+        if (products.length === 0) {
+            return;
+        } else {
+            const response = await axios.post("/api/checkout", {
+                name: clientData.name,
+                email: clientData.email,
+                city: clientData.city,
+                postalCode: clientData.postalCode,
+                street: clientData.street,
+                country: clientData.country,
+                products: cart.items,
+            });
+            if (response.data.url) {
+                router.push(response.data.url);
+            }
         }
     };
 
@@ -108,7 +113,7 @@ const CartPage = (props: Props) => {
     return (
         <>
             <Header />
-            <S.Center>
+            <Center>
                 <S.ColumnsWrapper>
                     {router.query.payment === "success" ? (
                         <S.Box>
@@ -276,7 +281,7 @@ const CartPage = (props: Props) => {
                         </S.Box>
                     )}
                 </S.ColumnsWrapper>
-            </S.Center>
+            </Center>
         </>
     );
 };
