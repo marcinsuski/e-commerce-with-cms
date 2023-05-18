@@ -11,7 +11,7 @@ export interface ProductSchemaType {
 }
 
 export interface ProductType {
-    _id?: number;
+    _id?: string;
     title?: string;
     description?: string;
     price?: number;
