@@ -7,8 +7,12 @@ export const StyledProductsGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 40px;
-
     @media (max-width: 700px) {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+    @media (max-width: 580px) {
+        gap: 20px;
         grid-template-columns: 1fr 1fr;
     }
 `;

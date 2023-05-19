@@ -13,8 +13,84 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Center from "@/components/Center";
 import WhiteBox from "@/components/WhiteBox";
+import { styled } from "styled-components";
 
 type Props = {};
+
+export const ColumnsWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 40px;
+    margin-top: 40px;
+    .infobox {
+        height: fit-content;
+    }
+    @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+        grid-templte-rows: auto;
+        .infobox {
+         
+            height: fit-content;
+        }
+`;
+
+export const StyledTable = styled.table`
+    width: 100%;
+    th {
+        text-align: left;
+        text-transform: uppercase;
+        color: #aaa;
+        font-weight: 600;
+        font-size: 0.7rem;
+    }
+    td {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+`;
+
+export const ProductInfoCell = styled.td`
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`;
+
+export const ProductImageBox = styled.div`
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+        max-width: 70px;
+        max-height: 70px;
+    }
+`;
+
+export const QuantityLabel = styled.span`
+    padding: 0 6px;
+    display: block;
+    @media screen and (min-width: 700px) {
+        display: inline-block;
+    }
+`;
+
+export const StyledInput = styled.input`
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+`;
+
+export const CityHolder = styled.div`
+    display: flex;
+    gap: 5px;
+`;
 
 const initialValue = {
     name: "",
@@ -115,7 +191,7 @@ const CartPage = (props: Props) => {
         <>
             <Header />
             <Center>
-                <S.ColumnsWrapper>
+                <ColumnsWrapper>
                     {router.query.payment === "success" ? (
                         <WhiteBox>
                             <h1>Thank You for Your order</h1>
@@ -141,8 +217,8 @@ const CartPage = (props: Props) => {
                                     <tbody>
                                         {products.map((product) => (
                                             <tr key={product._id}>
-                                                <S.ProductInfoCell>
-                                                    <S.ProductImageBox>
+                                                <ProductInfoCell>
+                                                    <ProductImageBox>
                                                         <Image
                                                             src={
                                                                 product.images
@@ -154,9 +230,9 @@ const CartPage = (props: Props) => {
                                                             width={70}
                                                             height={70}
                                                         />
-                                                    </S.ProductImageBox>
+                                                    </ProductImageBox>
                                                     {product.title}:
-                                                </S.ProductInfoCell>
+                                                </ProductInfoCell>
                                                 <td>
                                                     <Button
                                                         style={{
@@ -172,7 +248,7 @@ const CartPage = (props: Props) => {
                                                     >
                                                         -
                                                     </Button>
-                                                    <S.QuantityLabel>
+                                                    <QuantityLabel>
                                                         {
                                                             cart.items.filter(
                                                                 (id) =>
@@ -180,7 +256,7 @@ const CartPage = (props: Props) => {
                                                                     product._id?.toString()
                                                             ).length
                                                         }
-                                                    </S.QuantityLabel>
+                                                    </QuantityLabel>
                                                     <Button
                                                         style={{
                                                             padding: "0px 8px",
@@ -247,7 +323,7 @@ const CartPage = (props: Props) => {
                                 required={true}
                                 onChange={(e) => updateStreet(e)}
                             />
-                            <S.CityHolder>
+                            <CityHolder>
                                 <Input
                                     type="text"
                                     placeholder="City"
@@ -266,7 +342,7 @@ const CartPage = (props: Props) => {
                                     required={true}
                                     onChange={(e) => updatePostalCode(e)}
                                 />
-                            </S.CityHolder>
+                            </CityHolder>
                             <Input
                                 type="text"
                                 placeholder="Country"
@@ -281,7 +357,7 @@ const CartPage = (props: Props) => {
                             </Button>
                         </WhiteBox>
                     )}
-                </S.ColumnsWrapper>
+                </ColumnsWrapper>
             </Center>
         </>
     );

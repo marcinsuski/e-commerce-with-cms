@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 
 const CenterDiv = styled.div`
+    position: relative;
     max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;

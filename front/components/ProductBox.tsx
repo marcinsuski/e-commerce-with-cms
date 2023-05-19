@@ -5,11 +5,13 @@ import { RootState } from "@/store/store";
 import { addItem } from "@/store/cartSlice";
 import { styled } from "styled-components";
 import Link from "next/link";
-import CartIcon from "./CartIcon";
+import CartIcon from "./icons/CartIcon";
 
 export const ProductWrapper = styled.div`
-    width: 150px;
-    height: 150px;
+    min-width: 135px;
+    min-height: 135px;
+    max-width: 150px;
+    max-height: 150px;
     aspect-ratio: 1 / 1;
     background-color: #fff;
     border-radius: 10px;
@@ -33,6 +35,7 @@ export const WhiteBox = styled(Link)`
     img {
         max-width: 100%;
         max-height: 80px;
+        object-fit: contain;
     }
 `;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import ButtonLink from "./ButtonLink";
-import CartIcon from "./CartIcon";
+import CartIcon from "./icons/CartIcon";
 import * as S from "@/styles/Styles";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addItem, removeItem } from "@/store/cartSlice";
@@ -27,7 +27,7 @@ const FeaturedProduct = ({ product }: Props) => {
                             <S.Desc>{product.description}</S.Desc>
                             <S.ButtonsWrapper>
                                 <ButtonLink
-                                    href={`/products/${product._id}`}
+                                    href={`/product/${product._id}`}
                                     white={1}
                                     outline={1}
                                 >

@@ -8,19 +8,20 @@ import { Product } from "@/models/Product";
 import { GetServerSideProps } from "next";
 import { styled } from "styled-components";
 import WhiteBox from "@/components/WhiteBox";
-import Image from "next/image";
 import ProductImages from "@/components/ProductImages";
 import Button from "@/components/Button";
-import CartIcon from "@/components/CartIcon";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { RootState } from "@/store/store";
+import CartIcon from "@/components/icons/CartIcon";
+import { useAppDispatch } from "@/store/hooks";
 import { addItem } from "@/store/cartSlice";
 
 const ColWrapper = styled.div`
     display: grid;
-    grid-template-columns: 0.6fr 1.4fr;
+    grid-template-columns: 1fr;
     gap: 40px;
     margin-top: 40px;
+    @media screen and (min-width: 700px) {
+        grid-template-columns: 0.6fr 1.4fr;
+    }
 `;
 
 const PriceRow = styled.div`
@@ -39,7 +40,6 @@ type Props = {
 
 const ProductPage = ({ product }: Props) => {
     const dispatch = useAppDispatch();
-    const cart = useAppSelector((state: RootState) => state.cart);
     return (
         <>
             <Header />
