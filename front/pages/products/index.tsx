@@ -13,6 +13,7 @@ type Props = {
 };
 
 const Products = ({ products }: Props) => {
+    console.log(products);
     return (
         <>
             <Header />

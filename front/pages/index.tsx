@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Header from "@/components/Header";
 import FeaturedProduct from "@/components/FeaturedProduct";
-import { Product, ProductSchemaType } from "@/models/Product";
+import { Product } from "@/models/Product";
 import { mongooseConnect } from "@/lib/mongoose";
 import NewProducts from "@/components/NewProducts";
+import { ProductSchemaType } from "@/types/types";
 
 type Props = {
     featuredProduct: ProductSchemaType;
