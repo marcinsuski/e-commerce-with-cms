@@ -13,6 +13,7 @@ import Button from "@/components/Button";
 import CartIcon from "@/components/icons/CartIcon";
 import { useAppDispatch } from "@/store/hooks";
 import { addItem } from "@/store/cartSlice";
+import Layout from "@/components/Layout";
 
 const ColWrapper = styled.div`
     display: grid;
@@ -41,8 +42,7 @@ type Props = {
 const ProductPage = ({ product }: Props) => {
     const dispatch = useAppDispatch();
     return (
-        <>
-            <Header />
+        <Layout>
             <Center>
                 <ColWrapper>
                     <WhiteBox>
@@ -71,7 +71,7 @@ const ProductPage = ({ product }: Props) => {
                     </div>
                 </ColWrapper>
             </Center>
-        </>
+        </Layout>
     );
 };
 

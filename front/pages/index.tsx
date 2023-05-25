@@ -5,6 +5,7 @@ import { Product } from "@/models/Product";
 import { mongooseConnect } from "@/lib/mongoose";
 import NewProducts from "@/components/NewProducts";
 import { ProductSchemaType } from "@/types/types";
+import Layout from "@/components/Layout";
 
 type Props = {
     featuredProduct: ProductSchemaType;
@@ -27,11 +28,11 @@ export default function Home({ featuredProduct, newProducts }: Props) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>
-                <Header />
+
+            <Layout>
                 <FeaturedProduct product={featuredProduct} />
                 <NewProducts products={newProducts} />
-            </main>
+            </Layout>
         </>
     );
 }

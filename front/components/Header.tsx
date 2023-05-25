@@ -23,7 +23,7 @@ export const HeaderWrapper = styled.div`
 `;
 
 interface MobileNavType {
-    mobileNavActive: boolean;
+    mobilenavactive: boolean;
 }
 
 const StyledMobileNav = css<MobileNavType>`
@@ -43,7 +43,7 @@ const StyledMobileNav = css<MobileNavType>`
         padding: 0;
     }
     ${(props) =>
-        props.mobileNavActive
+        props.mobilenavactive === true
             ? `transform: translateX(0);`
             : `transform: translateX(100%);`}
 `;
@@ -87,7 +87,7 @@ const Header = () => {
             <Center>
                 <HeaderWrapper>
                     <Logo href={"/"}>TechStore</Logo>
-                    <StyledNav mobileNavActive={mobileNavActive}>
+                    <StyledNav mobilenavactive={mobileNavActive}>
                         <NavLink href={"/"}>Home</NavLink>
                         <NavLink href={"/products"}>All Products</NavLink>
                         <NavLink href={"/categories"}>Categories</NavLink>

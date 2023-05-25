@@ -7,6 +7,7 @@ import { Product } from "@/models/Product";
 import { ProductSchemaType } from "@/types/types";
 import ProductsGrid from "@/components/ProductsGrid";
 import Title from "@/components/Title";
+import Layout from "@/components/Layout";
 
 type Props = {
     products: ProductSchemaType[];
@@ -15,13 +16,12 @@ type Props = {
 const Products = ({ products }: Props) => {
     console.log(products);
     return (
-        <>
-            <Header />
+        <Layout>
             <Center>
                 <Title>All Products</Title>
                 <ProductsGrid products={products} />
             </Center>
-        </>
+        </Layout>
     );
 };
 

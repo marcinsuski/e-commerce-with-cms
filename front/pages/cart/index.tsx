@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import Center from "@/components/Center";
 import WhiteBox from "@/components/WhiteBox";
 import { styled } from "styled-components";
+import Layout from "@/components/Layout";
 
 type Props = {};
 
@@ -182,17 +183,20 @@ const CartPage = (props: Props) => {
     };
 
     useEffect(() => {
-        if (router.query.payment === "success") {
+        if (
+            typeof window !== "undefined" &&
+            router.query.payment === "success"
+        ) {
             dispatch(clearCart());
         }
     }, []);
 
     return (
-        <>
-            <Header />
+        <Layout>
             <Center>
                 <ColumnsWrapper>
-                    {router.query.payment === "success" ? (
+                    {typeof window !== "undefined" &&
+                    router.query.payment === "success" ? (
                         <WhiteBox>
                             <h1>Thank You for Your order</h1>
                             <p>
@@ -206,7 +210,7 @@ const CartPage = (props: Props) => {
                                 <div>Your cart is empty</div>
                             )}
                             {cart.items.length > 0 && (
-                                <Table>
+                                <StyledTable>
                                     <thead>
                                         <tr>
                                             <th>Product</th>
@@ -289,14 +293,14 @@ const CartPage = (props: Props) => {
                                             <td>${total}</td>
                                         </tr>
                                     </tbody>
-                                </Table>
+                                </StyledTable>
                             )}
                         </WhiteBox>
                     )}
                     {!!cart && (
                         <WhiteBox className="infobox">
                             <h2>Order information</h2>
-                            <Input
+                            <StyledInput
                                 type="text"
                                 placeholder="Name"
                                 value={clientData.name}
@@ -305,7 +309,7 @@ const CartPage = (props: Props) => {
                                 required={true}
                                 onChange={(e) => updateName(e)}
                             />
-                            <Input
+                            <StyledInput
                                 type="text"
                                 placeholder="Email"
                                 value={clientData.email}
@@ -314,7 +318,7 @@ const CartPage = (props: Props) => {
                                 required={true}
                                 onChange={(e) => updateEmail(e)}
                             />
-                            <Input
+                            <StyledInput
                                 type="text"
                                 placeholder="Street Address"
                                 value={clientData.street}
@@ -324,7 +328,7 @@ const CartPage = (props: Props) => {
                                 onChange={(e) => updateStreet(e)}
                             />
                             <CityHolder>
-                                <Input
+                                <StyledInput
                                     type="text"
                                     placeholder="City"
                                     value={clientData.city}
@@ -333,7 +337,7 @@ const CartPage = (props: Props) => {
                                     required={true}
                                     onChange={(e) => updateCity(e)}
                                 />
-                                <Input
+                                <StyledInput
                                     type="text"
                                     placeholder="Postal Code"
                                     value={clientData.postalCode}
@@ -343,7 +347,7 @@ const CartPage = (props: Props) => {
                                     onChange={(e) => updatePostalCode(e)}
                                 />
                             </CityHolder>
-                            <Input
+                            <StyledInput
                                 type="text"
                                 placeholder="Country"
                                 value={clientData.country}
@@ -359,7 +363,7 @@ const CartPage = (props: Props) => {
                     )}
                 </ColumnsWrapper>
             </Center>
-        </>
+        </Layout>
     );
 };
 

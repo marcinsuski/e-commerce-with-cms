@@ -3,6 +3,8 @@ const nextConfig = {
     reactStrictMode: true,
     compiler: {
         styledComponents: true,
+        ssr: false,
+        cssProp: true,
     },
     images: {
         remotePatterns: [

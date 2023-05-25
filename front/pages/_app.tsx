@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { store } from "@/store/store";
 import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
+import Layout from "@/components/Layout";
 
 const GlobalStyles = createGlobalStyle`
 body {
