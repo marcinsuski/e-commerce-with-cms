@@ -7,28 +7,15 @@ import NewProducts from "@/components/NewProducts";
 import { ProductSchemaType } from "@/types/types";
 import Layout from "@/components/Layout";
 
-type Props = {
+export type HomeProps = {
     featuredProduct: ProductSchemaType;
     newProducts: ProductSchemaType[];
 };
 
-export default function Home({ featuredProduct, newProducts }: Props) {
+export default function Home({ featuredProduct, newProducts }: HomeProps) {
+    console.log(featuredProduct, newProducts);
     return (
         <>
-            <Head>
-                <title>TechStore</title>
-
-                <meta
-                    name="description"
-                    content="The only tech store you need to know."
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
             <Layout>
                 <FeaturedProduct product={featuredProduct} />
                 <NewProducts products={newProducts} />
