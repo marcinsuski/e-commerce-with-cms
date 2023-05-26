@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "@/store/cartSlice";
+import clientReducer from "@/store/clientSlice";
 
 export const store = configureStore({
     reducer: {
         cart: cartReducer,
+        client: clientReducer,
     },
 });
 

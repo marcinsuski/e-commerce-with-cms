@@ -1,11 +1,7 @@
 import Button from "@/components/Button";
-import Header from "@/components/Header";
-import Input from "@/components/Input";
-import Table from "@/components/Table";
 import { addItem, clearCart, removeItem } from "@/store/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
-import * as S from "@/styles/Styles";
 import { ProductType, ClientData } from "@/types/types";
 import axios from "axios";
 import Image from "next/image";
@@ -15,6 +11,15 @@ import Center from "@/components/Center";
 import WhiteBox from "@/components/WhiteBox";
 import { styled } from "styled-components";
 import Layout from "@/components/Layout";
+import {
+    addEmail,
+    addName,
+    addStreet,
+    addCity,
+    addPostalCode,
+    addCountry,
+    clearClientData,
+} from "@/store/clientSlice";
 
 type Props = {};
 
@@ -105,8 +110,8 @@ const initialValue = {
 const CartPage = (props: Props) => {
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state: RootState) => state.cart);
+    const client = useAppSelector((state: RootState) => state.client);
     const [products, setProducts] = useState<ProductType[]>([]);
-    const [clientData, setClientData] = useState<ClientData>(initialValue);
     const router = useRouter();
 
     useEffect(() => {
@@ -116,42 +121,6 @@ const CartPage = (props: Props) => {
             });
         }
     }, [cart]);
-
-    const updateName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setClientData((prev) => {
-            return { ...prev, name: e.target.value };
-        });
-    };
-
-    const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setClientData((prev) => {
-            return { ...prev, email: e.target.value };
-        });
-    };
-
-    const updateStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setClientData((prev) => {
-            return { ...prev, street: e.target.value };
-        });
-    };
-
-    const updateCity = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setClientData((prev) => {
-            return { ...prev, city: e.target.value };
-        });
-    };
-
-    const updatePostalCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setClientData((prev) => {
-            return { ...prev, postalCode: e.target.value };
-        });
-    };
-
-    const updateCountry = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setClientData((prev) => {
-            return { ...prev, country: e.target.value };
-        });
-    };
 
     let total = 0;
     for (const productId of cart.items) {
@@ -168,12 +137,12 @@ const CartPage = (props: Props) => {
             return;
         } else {
             const response = await axios.post("/api/checkout", {
-                name: clientData.name,
-                email: clientData.email,
-                city: clientData.city,
-                postalCode: clientData.postalCode,
-                street: clientData.street,
-                country: clientData.country,
+                name: client.name,
+                email: client.email,
+                city: client.city,
+                postalCode: client.postalCode,
+                street: client.street,
+                country: client.country,
                 products: cart.items,
             });
             if (response.data.url) {
@@ -188,6 +157,7 @@ const CartPage = (props: Props) => {
             router.query.payment === "success"
         ) {
             dispatch(clearCart());
+            dispatch(clearClientData());
         }
     }, []);
 
@@ -303,58 +273,72 @@ const CartPage = (props: Props) => {
                             <StyledInput
                                 type="text"
                                 placeholder="Name"
-                                value={clientData.name}
+                                value={client.name}
                                 id="name"
                                 name="name"
                                 required={true}
-                                onChange={(e) => updateName(e)}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => dispatch(addName(e.target.value))}
                             />
                             <StyledInput
                                 type="text"
                                 placeholder="Email"
-                                value={clientData.email}
+                                value={client.email}
                                 id="email"
                                 name="email"
                                 required={true}
-                                onChange={(e) => updateEmail(e)}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => dispatch(addEmail(e.target.value))}
                             />
                             <StyledInput
                                 type="text"
                                 placeholder="Street Address"
-                                value={clientData.street}
+                                value={client.street}
                                 id="street"
                                 name="street"
                                 required={true}
-                                onChange={(e) => updateStreet(e)}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => dispatch(addStreet(e.target.value))}
                             />
                             <CityHolder>
                                 <StyledInput
                                     type="text"
                                     placeholder="City"
-                                    value={clientData.city}
+                                    value={client.city}
                                     id="city"
                                     name="city"
                                     required={true}
-                                    onChange={(e) => updateCity(e)}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => dispatch(addCity(e.target.value))}
                                 />
                                 <StyledInput
                                     type="text"
                                     placeholder="Postal Code"
-                                    value={clientData.postalCode}
+                                    value={client.postalCode}
                                     id="postalCode"
                                     name="postalCode"
                                     required={true}
-                                    onChange={(e) => updatePostalCode(e)}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) =>
+                                        dispatch(addPostalCode(e.target.value))
+                                    }
                                 />
                             </CityHolder>
                             <StyledInput
                                 type="text"
                                 placeholder="Country"
-                                value={clientData.country}
+                                value={client.country}
                                 id="country"
                                 name="country"
                                 required={true}
-                                onChange={(e) => updateCountry(e)}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => dispatch(addCountry(e.target.value))}
                             />
                             <Button black={1} block={1} onClick={goToPayment}>
                                 Continue to checkout

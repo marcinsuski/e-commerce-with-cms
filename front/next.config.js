@@ -10,7 +10,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "s3.amazonaws.com",
+                hostname: "marcin-next-ecommerce.s3.amazonaws.com",
                 port: "",
                 pathname: "/**",
             },

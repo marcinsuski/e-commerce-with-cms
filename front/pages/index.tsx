@@ -13,7 +13,6 @@ export type HomeProps = {
 };
 
 export default function Home({ featuredProduct, newProducts }: HomeProps) {
-    console.log(featuredProduct, newProducts);
     return (
         <>
             <Layout>
