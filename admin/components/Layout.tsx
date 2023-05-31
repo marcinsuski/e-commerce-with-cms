@@ -19,7 +19,7 @@ function Layout(props: Props) {
                 <Head>
                     <title>ecommerce Admin panel</title>
                     <meta name="description" content="Admin panel login" />
-                    <link rel="icon" href="/favicon.ico" />
+                    <link rel="icon" sizes="32x32" href="/favicon.svg"></link>
                 </Head>
 
                 <main className={styles.wrapper}>

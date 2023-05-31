@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Center from "@/components/Center";
 import WhiteBox from "@/components/WhiteBox";
 import { styled } from "styled-components";
+import * as S from "@/styles/Styles";
 import Layout from "@/components/Layout";
 import {
     addEmail,
@@ -98,6 +99,12 @@ export const CityHolder = styled.div`
     gap: 5px;
 `;
 
+export const CartHeader = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+`;
+
 const initialValue = {
     name: "",
     email: "",
@@ -175,7 +182,18 @@ const CartPage = (props: Props) => {
                         </WhiteBox>
                     ) : (
                         <WhiteBox className="cart">
-                            <h2>Cart</h2>
+                            <CartHeader>
+                                <h2>Cart</h2>
+                                <S.ButtonsWrapper>
+                                    <Button
+                                        black={1}
+                                        style={{ height: "30px" }}
+                                        onClick={() => dispatch(clearCart())}
+                                    >
+                                        Clear cart
+                                    </Button>
+                                </S.ButtonsWrapper>
+                            </CartHeader>
                             {!cart.items.length && (
                                 <div>Your cart is empty</div>
                             )}

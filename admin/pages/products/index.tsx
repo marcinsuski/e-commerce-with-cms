@@ -19,6 +19,7 @@ const Products = () => {
             <Head>
                 <title>Products page</title>
                 <meta name="description" content="Products page" />
+                <link rel="icon" sizes="32x32" href="/favicon.svg"></link>
             </Head>
             <Layout>
                 <button tabIndex={-1} className={styles.newproduct__btn}>

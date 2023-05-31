@@ -12,6 +12,7 @@ export default function Home() {
         <>
             <Head>
                 <title>Admin Panel</title>
+                <link rel="icon" sizes="32x32" href="/favicon.svg"></link>
                 <meta name="description" content="Admin Panel" />
             </Head>
             <Layout>
