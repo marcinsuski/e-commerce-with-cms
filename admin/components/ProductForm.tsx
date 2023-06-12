@@ -12,10 +12,10 @@ const initialState = {
     price: 0,
     images: [],
     category: "",
-    properies: {},
+    properties: {},
 };
 
-const ProductForm: React.FC = ({
+const ProductForm = ({
     title,
     description,
     price,
@@ -188,10 +188,7 @@ const ProductForm: React.FC = ({
                             </label>
                             <div>
                                 <select
-                                    value={
-                                        product.properties &&
-                                        product.properties[property.name]
-                                    }
+                                    value={property.name}
                                     onChange={(e) =>
                                         setProductProp(property.name || "", e)
                                     }
