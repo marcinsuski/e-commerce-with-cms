@@ -17,13 +17,15 @@ e-commerce fullstack app with custom CMS (admin panel) done in Next.js (backend 
 - Google api
 - AWS S3
 
-
+[
 ## 💻 Demo
-Click the link and check the app: [Link](#)
+Click the link and check the app:  
+[Admin panel](https://e-commerce-admin-six.vercel.app/)  
+[Ecommerce front](https://e-commerce-front-lyart.vercel.app/)
 
 ### Screenshot
-
-
+![](./admin/public/screenshot-admin.JPG)
+![](./front/public/screenshot-front.JPG)
 
 ## 💾 Installation
 git clone https://github.com/marcinsuski/e-commerce-admin.git
@@ -46,6 +48,7 @@ After creating your own MongoDB database, add .env file to `admin` and `front` d
 _Google login:_  
 GOOGLE_ID= 'your google id'  
 GOOGLE_SECRET= 'your google secret'  
+SECRET= 'your secret generated for google auth'
 _products database_  
 
 MONGODB_URI='mongodb+srv://<mongodb-cluster>:<password>@cluster0.sjdaogc.mongodb.net/?retryWrites=true&w=majority'  
