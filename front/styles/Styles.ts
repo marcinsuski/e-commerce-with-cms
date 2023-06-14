@@ -6,6 +6,29 @@ export const Bg = styled.div`
     padding: 30px 0;
 `;
 
+export const StyledInput = styled.input`
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+`;
+
+export const StyledTable = styled.table`
+    width: 100%;
+    th {
+        text-align: left;
+        text-transform: uppercase;
+        color: #aaa;
+        font-weight: 600;
+        font-size: 0.7rem;
+    }
+    td {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+`;
+
 export const FeaturedTitle = styled.h1`
     margin: 0;
     font-weight: normal;
