@@ -1,8 +1,6 @@
 # e-commerce-admin
 e-commerce fullstack app with custom CMS (admin panel) done in Next.js (backend + frontend).
 
-
-
 ## 📦 Tech stack:
 ### Frontend
 - Next.js
@@ -17,7 +15,6 @@ e-commerce fullstack app with custom CMS (admin panel) done in Next.js (backend 
 - Google api
 - AWS S3
 
-[
 ## 💻 Demo
 Click the link and check the app:  
 [Admin panel](https://e-commerce-admin-six.vercel.app/)  
@@ -66,6 +63,12 @@ STRIPE_SK='your stripe access SK'
 STRIPE_PK='your stripe access PK'
 PUBLIC_URL="public url"
 
+
+## TODO: 
+- Fix styled components issue on the front
+- Improve validation in cart
+- add categories tab and account tab
+- add badges (promo, new arrivals, featured) to products
   
 ## ☎️ Contact
 In case of any comments or advice, You can e-mail me or use Issues :)
