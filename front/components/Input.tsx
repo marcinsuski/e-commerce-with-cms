@@ -1,5 +1,13 @@
-import React from "react";
-import * as S from "@/styles/Styles";
+import { styled } from "styled-components";
+
+export const StyledInput = styled.input`
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+`;
 
 type Props = {
     children?: React.ReactNode;
@@ -13,7 +21,7 @@ type Props = {
 };
 
 const Input = (props: Props) => {
-    return <S.StyledInput {...props} />;
+    return <StyledInput {...props} />;
 };
 
 export default Input;

@@ -1,6 +1,4 @@
-import { css, styled } from "styled-components";
-import { hoverColor, primary, secondary } from "@/lib/colors";
-import Link from "next/link";
+import { styled } from "styled-components";
 
 export const Bg = styled.div`
     background-color: #222;
